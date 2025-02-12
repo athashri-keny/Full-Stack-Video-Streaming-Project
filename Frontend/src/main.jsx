@@ -8,8 +8,8 @@ import Login from './Pages/login'
 import Signup from './Pages/signup'
 import AuthLayout from './Components/Authlayout'
 import Home from "./Pages/Home";
-import UserInfo from "./Components/Header/UserInfo";
-
+import UserInfo from './Components/UserInfo'
+import EditProfile from "./Components/EditProfile";
 // Define routes
 const Router = createBrowserRouter([
   {
@@ -42,6 +42,14 @@ const Router = createBrowserRouter([
     element: (
       <AuthLayout authentication= {true}>
         <UserInfo/>
+      </AuthLayout>
+    )
+  },
+  {
+    path: '/EditProfile',
+    element: (
+      <AuthLayout authentication = {true}>
+        <EditProfile/>
       </AuthLayout>
     )
   }

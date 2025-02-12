@@ -85,8 +85,7 @@ if(!createdUser) {
 return res.status(201).json(
     new ApiResponse(200 , createdUser , "User registeres successfully")
 )
-console.log('req.body:', req.body); // Log form data (non-file fields)
-console.log('req.files:', req.files); // Log uploaded files
+
 });
 
 
@@ -213,22 +212,34 @@ try {
 })
 
 // changing the User password
-const changerCurrentUserPassword = asyncHandler(async(req, res) => {
-    const {oldPassword , newPassword} = req.body // extracting the user oldpassword and new password
 
-// finding the user in database 
-  const User =  await user.findById(req.user?._id)
-    const isPasswordCorrect = await User.isPasswordCorrect(oldPassword) // checking the password correct that user has inentered(oldpassword)
-
-    if(!isPasswordCorrect) {
-        throw new ApiError (400 , "Invaild old password")
+const changerCurrentUserPassword = asyncHandler(async (req, res) => {
+    const { oldPassword, newPassword } = req.body; // Extracting the user's old and new password
+  
+    // Finding the user in the database
+    const User = await user.findById(req.user?._id);
+  
+    if (!User) {
+      throw new ApiError(404, 'User not found');
     }
+  
+    // Checking if the old password is correct
+    const isPasswordCorrect = await User.isPasswordCorrect(oldPassword);
+  
+    if (!isPasswordCorrect) {
+      throw new ApiError(400, 'Invalid old password');
+    }
+  
+    // Updating the user's password
+  
+
  // saving the new password 
     User.password = newPassword // saving the password in User 
      await User.save({validateBeforeSave: false})
      return res
      .status(200)
      .json(new ApiResponse(200, {} , "password change sucessfully"))
+    
 })
 
 

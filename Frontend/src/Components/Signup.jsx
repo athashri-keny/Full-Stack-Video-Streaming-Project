@@ -6,12 +6,17 @@ import {useDispatch} from 'react-redux'
 import {useForm} from 'react-hook-form'
 import axios from 'axios'
 import  { login } from '../Store/authslice'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEyeSlash  } from '@fortawesome/free-solid-svg-icons'
+import  {faEye} from '@fortawesome/free-solid-svg-icons'
+
 
 export const SignUp = () => {
 const Navigate = useNavigate()
 const [error , seterror] = useState('')
 const dispatch = useDispatch()
 const {register , handleSubmit} = useForm()
+const [showPassword , setShowPassword] = useState(false)
 
 
 const Create = async (data) => {
@@ -62,7 +67,7 @@ const Create = async (data) => {
 return (
   <div className="min-h-screen flex items-center justify-center bg-black">
     <div className="w-full max-w-md p-8 bg-gray-900 rounded-2xl shadow-lg">
-      <h2 className="text-3xl font-semibold text-center text-black-100 mb-4">
+      <h2 className="text-3xl font-semibold text-center text-white-100 mb-4">
         Sign Up
       </h2>
       {error && <p className="text-red-500 text-center">{error}</p>}
@@ -141,22 +146,35 @@ return (
           >
             Password
           </label>
-          <Input
-            type="password"
-            id="password"
-            className="w-full px-4 py-2 bg-gray-800 text-black-100 border border-gray-700 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
-            placeholder="Enter your password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters",
-              },
-            })}
-          />
-          {error.password && (
-            <p className="text-red-500 text-sm">{error.password.message}</p>
-          )}
+          <div className="relative w-full">
+  {/* Input Field */}
+  <Input
+    type={showPassword ? "text" : "password"}
+    id="password"
+    className="w-full px-4 py-2 bg-gray-800 text-black-100 border border-gray-700 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none pr-10"
+    placeholder="Enter your password"
+    {...register("password", {
+      required: "Password is required",
+      minLength: {
+        value: 6,
+        message: "Password must be at least 6 characters",
+      },
+    })}
+  />
+  
+  {/* Password Visibility Icon */}
+  <FontAwesomeIcon
+    icon={showPassword ? faEye : faEyeSlash}
+    onClick={() => setShowPassword(!showPassword)}
+    className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400 cursor-pointer hover:text-gray-200"
+  />
+
+  {/* Error Message */}
+  {error.password && (
+    <p className="text-red-500 text-sm mt-1">{error.password.message}</p>
+  )}
+</div>
+
         </div>
 
         {/* Avatar Upload */}
@@ -196,7 +214,6 @@ return (
             <p className="text-red-500 text-sm">{error.coverImage.message}</p>
           )}
         </div>
-
         {/* Submit Button */}
         <Button
   type="submit"
