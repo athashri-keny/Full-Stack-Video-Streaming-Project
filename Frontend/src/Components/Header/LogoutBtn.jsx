@@ -14,7 +14,7 @@ const Navigate = useNavigate()
     .then(() => {
         dispatch(logout())
         Navigate('/')
-    })
+          })
  }
   return (
     <button

@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import Input from '../Components/input'
 import Button from '../Components/Button'
 import axios from 'axios';
-import {Link , useNavigate} from 'react-router-dom'
+import { Link , useNavigate} from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { login as LoginAction } from '../Store/authslice';
 import { useDispatch } from 'react-redux';
 import { faEyeSlash  } from '@fortawesome/free-solid-svg-icons'
 import  {faEye} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 
 
@@ -20,16 +21,17 @@ const Navigate = useNavigate()
 const [showPassword , setShowPassword] = useState(false)
 
 
-const login = async (data) => {
+const login = async (data ) => {
   SetError(''); // Reset error state
+  
   try {
     const response = await axios.post('/api/users/login', data ,  {withCredentials: true}) ;
 
     if (response.data) {
-      // Only dispatch serializable data (like user info or token)
       dispatch(LoginAction(response.data.data?.user));
       if (response.data) {
         console.log('login in sucessfull' , response.data.data?.user)
+  
         Navigate('/')
       }
     }

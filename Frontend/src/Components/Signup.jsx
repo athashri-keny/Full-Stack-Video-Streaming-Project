@@ -26,6 +26,7 @@ const Create = async (data) => {
   console.log('Avatar file:', data.avatar?.[0]);
   console.log('CoverImage file:', data.coverImage?.[0]);
 
+  
   try {
     const formdata = new FormData();
     formdata.append("fullname", data.fullname);

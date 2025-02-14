@@ -33,8 +33,13 @@ router.route("/register").post(
    router.route("/update-account").patch(verifyjwt , updateAccountDetails)
 
    router.route("/avatar").patch(verifyjwt , upload.single("avatar") , updateUserAvatar)
-
-router.route("/cover-image").patch(verifyjwt , upload.single("coverImage" , updateUserCoverImg))
+   
+   router.route("/cover-image").patch(
+      verifyjwt,
+      upload.single("coverImage"),
+      updateUserCoverImg
+    );
+    
 
    router.route("/c/:username").get(verifyjwt , getUserChannelProfile)
 

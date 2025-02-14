@@ -40,8 +40,10 @@ const UpdatePass = async (e) => {
   } catch (error) {
     console.error('Error:', error);
     setMessage(error.response?.data?.message || "An error occurred");
+    
   }
 };
+
 
 
 return (

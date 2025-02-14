@@ -9,9 +9,14 @@ import Signup from './Pages/signup'
 import AuthLayout from './Components/Authlayout'
 import Home from "./Pages/Home";
 import UserInfo from './Components/UserInfo'
-import EditProfile from "./Components/EditProfile";
+import EditPassword from './Components/EditPassword'
+import UpdateAccountDetails from "./Components/UpdateAccountDetails";
+
+
+
 // Define routes
 const Router = createBrowserRouter([
+
   {
     path: '/',
     element: <App/>,
@@ -49,11 +54,18 @@ const Router = createBrowserRouter([
     path: '/EditProfile',
     element: (
       <AuthLayout authentication = {true}>
-        <EditProfile/>
+        <EditPassword/>
       </AuthLayout>
     )
-  }
-
+  },
+ {
+  path: '/EditNAME',
+  element: (
+    <AuthLayout authentication = {true}>
+    <UpdateAccountDetails/>
+    </AuthLayout>
+  )
+ }
 ]
   }
 ]);

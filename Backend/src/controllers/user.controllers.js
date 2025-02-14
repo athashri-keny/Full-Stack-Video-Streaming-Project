@@ -46,6 +46,7 @@ throw new ApiError (400 , "all fields are required")
 
 // Extracts the file paths for the uploaded avatar and cover image.
     const avatarLocalPath =  req.files?.avatar[0]?.path; 
+    console.log(avatarLocalPath)
 
 let coverImageeLocalpath;
 if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
