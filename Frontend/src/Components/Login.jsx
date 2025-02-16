@@ -31,7 +31,6 @@ const login = async (data ) => {
       dispatch(LoginAction(response.data.data?.user));
       if (response.data) {
         console.log('login in sucessfull' , response.data.data?.user)
-  
         Navigate('/')
       }
     }

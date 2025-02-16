@@ -14,6 +14,7 @@ const getallVidoes = asyncHandler(async (req, res) => {
   const pageNum = parseInt(page);
   const limitNum = parseInt(limit);
 
+  
   // Calculate how many items to skip based on page number and limit
   const skip = (pageNum - 1) * limitNum;
 
@@ -54,6 +55,7 @@ const getallVidoes = asyncHandler(async (req, res) => {
     currentPage: pageNum,  // Current page number
   });
 });
+
 
 
 

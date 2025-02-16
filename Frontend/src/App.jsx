@@ -3,8 +3,9 @@ import { Outlet } from "react-router-dom";
 import "./App.css";
 import Header from "./Components/Header/header";
 import Footer from "./Components/Footer/Footer";
-
+import SideNav from "./Components/SideNav/SideNav";
 import axios from "axios";
+
 
 
 
@@ -22,35 +23,11 @@ function App() {
       <Header />
       <main>
         <Outlet />
-      </main>
+        <SideNav />
+         </main>
       <Footer />
     </>
   );
 }
 
 export default App;
-
-  
-  // useEffect(() => {
-  //   if (calledRef.current) return;
-  //   calledRef.current = true;
-
-  //   axios
-  //     .get("/api/users/current-user", { withCredentials: true })
-
-  //     .then((response) => {
-  //       console.log("Current User API Response:", response.data);
-
-  //       const user = response.data.data?.user;
-
-  //       if (user) {
-  //         dispatch(login(user)); // Dispatch login action
-  //       } else {
-  //         dispatch(logout());
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching current user:", error);
-  //       dispatch(logout());
-  //     });
-  // }, [dispatch]);

@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react'
+// src/pages/Home.js
+import React from 'react';
 
+const Home = () => {
 
-function Home() {
- const [videos , setVideos] = useState([])
-
-if (videos.length === 0) {
-  return (
-    <>
   
-    {/* <h1>Login to watch Videos</h1> */}
-    </>
-  )
-}
+  return (
+   <>
+   
+   </>
+      
+  );
+};
 
-}
-
-export default Home
+export default Home;
