@@ -102,14 +102,14 @@ const Router = createBrowserRouter([
         )
       },
       {
-        path: "/Upload",
+        path: "/upload",
         element: (
           <AuthLayout authentication = {true}>
             <VideosUpload/>
           </AuthLayout>
         )
       }
-    ],
+       ],
   },
 ]);
 

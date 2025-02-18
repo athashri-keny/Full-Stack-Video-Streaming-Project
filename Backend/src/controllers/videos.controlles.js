@@ -66,6 +66,7 @@ const publishVideo = asyncHandler(async (req, res) => {
   const { title, description } = req.body;
   const thumbnail = req.files.thumbnail[0]; // extracts the first element of the array
   const VideoFile = req.files.VideoFile[0]; // extracts the first element of the aaray
+ 
 
   if (!title || !description || !thumbnail || !VideoFile) {
     throw new ApiError(404, "Title, description, thumbnail, and video file are required");
@@ -105,6 +106,8 @@ const publishVideo = asyncHandler(async (req, res) => {
     thumbnail: uploadedThumbnail.url, // Use `thumbnail` instead of `thumbnailUrl`
     owner: User._id, // Ensure the `owner` is set correctly
     time: new Date(), // Set the `time` field (or let it default in the schema)
+    VideoCloudinaryPublicId: uploadedVideo.public_id,
+    thumbnailCloudinaryPublicId: uploadedThumbnail.public_id
   });
 
   return res.status(201).json(
@@ -112,28 +115,34 @@ const publishVideo = asyncHandler(async (req, res) => {
   );
 });
 
-const GetvideoByID = asyncHandler(async(req , res) => {
-  
-  // taking the video id from the user 
-  // finding the video id in database
-  // returing the response to the User(frontend)
-  const VideoId = req.params.VideoId
+
+
+
+const GetvideoByID = asyncHandler(async (req, res) => {
+  const { VideoId } = req.params; // Assuming the route parameter is "VideoId"
+
   if (!VideoId) {
-    throw new ApiError(400 , "Video is required!-")
+    throw new ApiError(400, "Video ID is required!");
   }
 
-  const FoundVideoID = await Video.findById(VideoId)
-  if (!FoundVideoID) {
-    throw new ApiError(500 , "Video ID is incorrect ")
+  // Find the video by its MongoDB _id
+  const foundVideo = await Video.findById(VideoId).select(
+    "videoFile thumbnail title description time VideoCloudinaryPublicId thumbnailCloudinaryPublicId owner isPublished"
+  );
+
+  if (!foundVideo) {
+    throw new ApiError(404, "Video not found");
   }
 
-  return res
-  .status(201)
-  .json(
-    new ApiResponse(201 , FoundVideoID , "video fetched Sucessfully!")
-  )
+  // The response will include the Cloudinary public ID from the document
+  return res.status(200).json(
+    new ApiResponse(200, foundVideo, "Video fetched successfully!")
+  );
+});
 
-})
+
+
+
 
 const UpdateVideodetails = asyncHandler(async(req , res) => {
   // taking the video id from the user
@@ -174,6 +183,11 @@ const UpdateVideodetails = asyncHandler(async(req , res) => {
 
 })
 
+
+
+
+
+
 const DeleteVideo = asyncHandler(async(req , res) => {
   // take video id from the user
   // find the video in database 
@@ -199,6 +213,9 @@ const DeleteVideo = asyncHandler(async(req , res) => {
     new ApiResponse("Video deleted successfully!")
   );
 });
+
+
+
 
 
 const TogglePublishStatus = asyncHandler(async(req , res) => {

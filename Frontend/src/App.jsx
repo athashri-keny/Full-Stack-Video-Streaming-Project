@@ -4,8 +4,8 @@ import "./App.css";
 import Header from "./Components/Header/header";
 import Footer from "./Components/Footer/Footer";
 import SideNav from "./Components/SideNav/SideNav";
-import axios from "axios";
 
+import axios from "axios";
 
 
 
@@ -17,17 +17,19 @@ function App() {
      }
   })
  
-
   return (
     <>
       <Header />
-      <main>
-        <Outlet />
+      <main className="flex min-h-screen">
         <SideNav />
-         </main>
+        <div className="flex-1 bg-gray-100">
+          <Outlet />
+        </div>
+      </main>
       <Footer />
     </>
   );
-}
+};
+
 
 export default App;

@@ -41,7 +41,17 @@ const videoSchema = new Schema(
       ref: "User", // Reference to the User model
       required: true, // Assuming every video must have an owner
     },
+    
+    VideoCloudinaryPublicId: {
+      type: String,
+      required: true
+    },
+    thumbnailCloudinaryPublicId: {
+      type: String,
+      required: true
+    }
   },
+ 
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields
   }
