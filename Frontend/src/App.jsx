@@ -13,7 +13,7 @@ function App() {
   axios.get('api/users/current-user' ,  {withCredentials: true} )
   .then((response) => {
     if (response.data) {
-      console.log('user fetched sucessfully!' , response.data)
+      console.log('user fetched sucessfully!')
      }
   })
  
