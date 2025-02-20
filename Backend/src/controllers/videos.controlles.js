@@ -116,16 +116,14 @@ const publishVideo = asyncHandler(async (req, res) => {
 });
 
 
-
-
-const GetvideoByID = asyncHandler(async (req, res) => {
-  const { VideoId } = req.params; // Assuming the route parameter is "VideoId"
+const getVideoAndChannelProfile = asyncHandler(async (req, res) => {
+  const { VideoId } = req.params; // Expecting a valid VideoId from URL parameters
 
   if (!VideoId) {
     throw new ApiError(400, "Video ID is required!");
   }
 
-  // Find the video by its MongoDB _id
+  // Fetch the video details by VideoId
   const foundVideo = await Video.findById(VideoId).select(
     "videoFile thumbnail title description time VideoCloudinaryPublicId thumbnailCloudinaryPublicId owner isPublished"
   );
@@ -134,12 +132,71 @@ const GetvideoByID = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Video not found");
   }
 
-  // The response will include the Cloudinary public ID from the document
+  // Fetch the channel details based on the video's owner.
+  // Assuming 'owner' is stored as an ObjectId reference to the user.
+  const channel = await user.aggregate([
+    {
+      // Match using the owner's _id
+      $match: {
+        _id: foundVideo.owner,
+      },
+    },
+    {
+      // Lookup the channel's subscribers
+      $lookup: {
+        from: "subscriptions",
+        localField: "_id",
+        foreignField: "channel",
+        as: "subcribers",
+      },
+    },
+    {
+      // Lookup the channels the user subscribed to
+      $lookup: {
+        from: "subscriptions",
+        localField: "_id",
+        foreignField: "subcriber",
+        as: "subcribedto",
+      },
+    },
+    {
+      // Calculate additional fields
+      $addFields: {
+        subscibersCount: { $size: "$subcribers" },
+        channelssubscribedtoCount: { $size: "$subcribedto" },
+        isSubscribed: {
+          $cond: {
+            if: { $in: [req.User?._id, "$subcribers.subcriber"] },
+            then: true,
+            else: false,
+          },
+        },
+      },
+    },
+    {
+      // Project only the fields you want to return
+      $project: {
+        fullname: 1,
+        username: 1,
+        subscibersCount: 1,
+        channelssubscribedtoCount: 1,
+        isSubscribed: 1,
+        avatar: 1,
+        coverImage: 1,
+        email: 1,
+      },
+    },
+  ]);
+
+  if (!channel?.length) {
+    throw new ApiError(404, "Channel does not exist");
+  }
+
+  // Return both video and channel details in one response.
   return res.status(200).json(
-    new ApiResponse(200, foundVideo, "Video fetched successfully!")
+    new ApiResponse(200, { video: foundVideo, channel: channel[0] }, "Video and channel fetched successfully!")
   );
 });
-
 
 
 
@@ -249,7 +306,7 @@ const TogglePublishStatus = asyncHandler(async(req , res) => {
 export {
     getallVidoes,
     publishVideo,
-    GetvideoByID,
+    getVideoAndChannelProfile,
     UpdateVideodetails,
     DeleteVideo,
     TogglePublishStatus

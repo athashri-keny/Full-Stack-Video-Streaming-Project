@@ -99,7 +99,7 @@ if (response.data.data) {
           <Input
             type="file"
             id="video"
-            name="video"
+            name="VideoFile"
             accept = "video/*"
             className="block w-full text-sm text-gray-500
                        file:mr-4 file:py-2 file:px-4 file:rounded file:border-0

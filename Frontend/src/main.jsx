@@ -18,8 +18,7 @@ import Playlist from './Pages/Playlist'
 import Tweets from './Pages/Tweets'
 import VideosUpload from "./Pages/VideosUpload";
 import VideoPlayerPage from "./Pages/VideoPlayer";
-import CloudinaryPlayer from "./Components/Cloudinary/CloudinaryPlayer";
-
+import GetChannelInfo from "./Components/Video/GetChannelInfo";
 // Define routes
 const Router = createBrowserRouter([
   {
@@ -110,15 +109,15 @@ const Router = createBrowserRouter([
           </AuthLayout>
         )
       },
-      {
-        path: "/watch/c/:VideoId",
-        element: (
-          <AuthLayout authentication ={true}>
-         <VideoPlayerPage/>
-          </AuthLayout>
-        )
-      },
-      
+     {
+      path: "/watch/c/:VideoId",
+      element: (
+        <AuthLayout authentication = {true}
+        >
+          <VideoPlayerPage/>
+        </AuthLayout>
+      )
+     }
        ],
   },
 ]);
