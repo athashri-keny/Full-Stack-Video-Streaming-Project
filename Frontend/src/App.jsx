@@ -21,8 +21,7 @@ function App() {
     <>
       <Header />
       <main className="flex min-h-screen">
-        <SideNav />
-        <div className="flex-1 bg-gray-100">
+          <div className="flex-1 bg-gray-100">
           <Outlet />
         </div>
       </main>

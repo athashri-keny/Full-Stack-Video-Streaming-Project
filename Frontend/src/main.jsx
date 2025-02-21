@@ -18,7 +18,7 @@ import Playlist from './Pages/Playlist'
 import Tweets from './Pages/Tweets'
 import VideosUpload from "./Pages/VideosUpload";
 import VideoPlayerPage from "./Pages/VideoPlayer";
-import GetChannelInfo from "./Components/Video/GetChannelInfo";
+
 // Define routes
 const Router = createBrowserRouter([
   {
@@ -121,6 +121,7 @@ const Router = createBrowserRouter([
        ],
   },
 ]);
+
 
 // Render the application
 ReactDOM.createRoot(document.getElementById("root")).render(

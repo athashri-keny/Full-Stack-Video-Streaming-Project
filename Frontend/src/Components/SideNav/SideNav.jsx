@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const SideNav = () => {
   return (
-    <div className="w-64 h-screen bg-gray-800 text-white p-6">
+    <div className="w-45 h-screen bg-gray-800 text-white p-6">
       <nav>
         <ul className="space-y-4">
           <li>

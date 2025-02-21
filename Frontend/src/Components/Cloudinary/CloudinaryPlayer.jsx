@@ -32,12 +32,6 @@ const CloudinaryPlayer = ({ publicId, width, height }) => {
   useEffect(() => {
     if (!scriptLoaded || !videoRef.current) return;
 
-    // Dispose any existing player to ensure a fresh instance
-    // if (playerRef.current) {
-    //   playerRef.current.dispose();
-    //   playerRef.current = null;
-    // }
-
     // Initialize the player with the new publicId
     playerRef.current = cloudinaryRef.current.videoPlayer(videoRef.current, {
       cloud_name: "carti",
@@ -47,13 +41,7 @@ const CloudinaryPlayer = ({ publicId, width, height }) => {
     });
     playerRef.current.source({ publicId, cloudName: "carti" });
 
-    // return () => {
-    //   if (playerRef.current) {
-    //     playerRef.current.dispose();
-    //     playerRef.current = null;
-    //   }
-    // };
-  }, [scriptLoaded, publicId]);
+      }, [scriptLoaded, publicId]);
 
   return <video ref={videoRef} width={width} height={height} />;
 };

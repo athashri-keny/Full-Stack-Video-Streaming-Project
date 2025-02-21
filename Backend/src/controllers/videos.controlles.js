@@ -4,6 +4,8 @@ import { ApiResponse } from "../utils/api.response.js";
 import { user } from "../models/user.model.js";
 import { Video } from "../models/video.model.js";
 import { uploadoncloud } from "../utils/file.upload.js";
+import { Comment } from "../models/commet.model.js";
+import mongoose from "mongoose";
 
 // Get all videos with pagination, search, and sorting
 const getallVidoes = asyncHandler(async (req, res) => {
@@ -55,7 +57,6 @@ const getallVidoes = asyncHandler(async (req, res) => {
     currentPage: pageNum,  // Current page number
   });
 });
-
 
 
 
@@ -114,6 +115,7 @@ const publishVideo = asyncHandler(async (req, res) => {
     new ApiResponse(201, "Video uploaded successfully", newVideo)
   );
 });
+
 
 
 const getVideoAndChannelProfile = asyncHandler(async (req, res) => {
@@ -192,12 +194,30 @@ const getVideoAndChannelProfile = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Channel does not exist");
   }
 
+
+  // commmets
+    if (!VideoId) {
+        throw new ApiError(404 , "Video ID is required!")
+    }
+    const {page = 1 , limit  = 10} = req.query
+
+    const pageNum = parseInt(page , 10)
+    const limitNum = parseInt(limit , 10)
+
+    const skip = (pageNum - 1) * limitNum
+
+    const Comments = await Comment.find({ video: new mongoose.Types.ObjectId(VideoId) })
+    .skip(skip)
+    .limit(limitNum)
+    .sort({ createdAt: -1 });
+    
+
   // Return both video and channel details in one response.
   return res.status(200).json(
-    new ApiResponse(200, { video: foundVideo, channel: channel[0] }, "Video and channel fetched successfully!")
+    new ApiResponse(200, { video: foundVideo, channel: channel[0]  ,  Comments: Comments}, "Video and channel fetched successfully!")
   );
-});
 
+});
 
 
 
@@ -239,7 +259,6 @@ const UpdateVideodetails = asyncHandler(async(req , res) => {
   });
 
 })
-
 
 
 

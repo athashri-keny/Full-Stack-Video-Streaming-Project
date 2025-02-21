@@ -11,19 +11,19 @@ const GetVideoComment = asyncHandler(async(req , res) => {
     if (!VideoId) {
         throw new ApiError(404 , "Video ID is required!")
     }
-    const {page = 1 , limit  = 10} = req.qurey
+    const {page = 1 , limit  = 10} = req.query
 
     const pageNum = parseInt(page , 10)
     const limitNum = parseInt(limit , 10)
 
-    const Skip = (pageNum - 1) * limitNum
+    const skip = (pageNum - 1) * limitNum
 
-    const Comments = await  Comment.find({VideoId}
-        .Skip(Skip)
-        .limit(limitNum)
-        .sort({ createdAt: -1})
-    )
-
+    const Comments = await Comment.find({ video: new mongoose.Types.ObjectId(VideoId) })
+    .skip(skip)
+    .limit(limitNum)
+    .sort({ createdAt: -1 });
+    
+    
     return res
     .status(200)
     .json(
@@ -31,7 +31,7 @@ const GetVideoComment = asyncHandler(async(req , res) => {
          ApiResponse,
          page: pageNum,
          limit : limitNum,
-         Comments,
+         Comments: Comments
     }
 )
 });
@@ -149,7 +149,8 @@ const DeleteComment = asyncHandler(async(req , res) => {
 export {
     ADDComments,
     UpdateComment,
-    DeleteComment
+    DeleteComment,
+    GetVideoComment
 }
 
 
