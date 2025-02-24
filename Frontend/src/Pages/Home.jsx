@@ -33,7 +33,7 @@ const [videos , setVideos] = useState([])
             {videos.length === 0 ? (
               <p className="text-center text-gray-600">Loading videos...</p>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"> {/* Reduced gap from gap-4 to gap-2 */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                 {videos.map((video) => (
                   <Link
                     key={video._id}

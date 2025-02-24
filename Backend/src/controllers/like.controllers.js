@@ -10,12 +10,14 @@ import { Comment } from "../models/commet.model.js";
 
 const ToggleVideoLike = asyncHandler(async(req , res) => {
     const {VideoId} = req.params
+    
+    const UserId = req.user._id
 
     if (!VideoId) {
         throw new ApiError(400 , "Video id is required!")
     }
 
-    const UserId = req.user._id
+    // const UserId = req.user._id
 
     const User = await user.findById(UserId)
     if(!User) {
@@ -63,6 +65,7 @@ const ToggleVideoLike = asyncHandler(async(req , res) => {
         message: "Video LIKED Sucessfully"
     }))
 });
+
 
 
 const ToggleTweetlikes = asyncHandler(async(req , res) => {
