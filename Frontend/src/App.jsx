@@ -8,7 +8,6 @@ import SideNav from "./Components/SideNav/SideNav";
 import axios from "axios";
 
 
-
 function App() {
   axios.get('api/users/current-user' ,  {withCredentials: true} )
   .then((response) => {

@@ -37,6 +37,10 @@ const SideNav = () => {
             Upload
             </Link> 
           </li>
+          <Link to= '/Manage-Videos' className='hover:text-gray-400'>
+          Manage Videos
+          </Link>
+          
         </ul>
       </nav>
     </div>

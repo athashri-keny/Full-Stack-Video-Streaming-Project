@@ -18,6 +18,7 @@ import Playlist from './Pages/Playlist'
 import Tweets from './Pages/Tweets'
 import VideosUpload from "./Pages/VideosUpload";
 import VideoPlayerPage from "./Pages/VideoPlayer";
+import ManageVideosss from "./Pages/ManageVideos";
 
 // Define routes
 const Router = createBrowserRouter([
@@ -115,6 +116,14 @@ const Router = createBrowserRouter([
         <AuthLayout authentication = {true}
         >
           <VideoPlayerPage/>
+        </AuthLayout>
+      )
+     },
+     {
+      path: "/Manage-Videos" , 
+      element: (
+        <AuthLayout authentication = {true}>
+     <ManageVideosss/>
         </AuthLayout>
       )
      }

@@ -9,8 +9,13 @@ import { useDispatch } from 'react-redux';
 import { faEyeSlash  } from '@fortawesome/free-solid-svg-icons'
 import  {faEye} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Cookies from 'js-cookie'
 
 
+
+const accessToken = Cookies.get('accessToken');
+const refreshToken = Cookies.get("refreshToken")
+console.log(accessToken , refreshToken)
 
 
 export const Login = () => {
@@ -19,7 +24,8 @@ const {register , handleSubmit} = useForm()
 const dispatch = useDispatch()
 const Navigate = useNavigate()
 const [showPassword , setShowPassword] = useState(false)
-
+Cookies.set('accessToken', accessToken, { expires: 7, secure: true, sameSite: 'strict' });
+Cookies.set('refreshToken', refreshToken, { expires: 7, secure: true, sameSite: 'strict' });
 
 const login = async (data ) => {
   SetError(''); // Reset error state
