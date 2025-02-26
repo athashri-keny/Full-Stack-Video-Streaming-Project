@@ -43,18 +43,12 @@ return (
               <p className="text-sm font-semibold">{video.title}</p>
               <div className="mt-2 flex space-x-2">
                 <Link
-                  to={`/edit-video/${video._id}`}
+                  to={`/EditVideoDetails/${video._id}`}
                   className="bg-blue-500 hover:bg-blue-600 text-white text-xs py-1 px-2 rounded"
                 >
-                  Edit Video Details
+                 Edit Video
                 </Link>
-                <button
-                  onClick={() => handleDelete(video._id)}
-                  className="bg-red-500 hover:bg-red-600 text-white text-xs py-1 px-2 rounded"
-                >
-                  Delete
-                </button>
-              </div>
+                  </div>
             </div>
           </div>
         ))}

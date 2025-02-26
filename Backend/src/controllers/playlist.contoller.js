@@ -8,7 +8,7 @@ import {Video} from "../models/video.model.js"
 
 // creating a playlist 
 const CreatePlaylist = asyncHandler(async(req , res) => {
-       const {name , description} = req.body
+       const {name , description} = req.body 
 
        if(!name || !description) {
         throw new ApiError (404 , "name and description of the playlist is required")

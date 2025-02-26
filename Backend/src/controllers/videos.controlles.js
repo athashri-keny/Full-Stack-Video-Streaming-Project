@@ -240,7 +240,7 @@ const UpdateVideodetails = asyncHandler(async(req , res) => {
   // taking new Information for eg title , description and thumbnail
   // saving the new information as NEWINFO in database
   // returing the response to the USER
-  const VideoId = req.params.VideoId
+  const {VideoId} = req.params
   if (!VideoId) {
     throw new ApiError(404 , "Video Id required!")
   }
@@ -250,7 +250,7 @@ const UpdateVideodetails = asyncHandler(async(req , res) => {
     throw new ApiError(401, "Title and description are required");
   }
   
-  const FoundVideoID = await Video.findById(VideoId)
+  const FoundVideoID = await Video.findById(new mongoose.Types.ObjectId(VideoId))
   if(!FoundVideoID) {
     throw new ApiError(400 , "Invaild Video Id")
   }

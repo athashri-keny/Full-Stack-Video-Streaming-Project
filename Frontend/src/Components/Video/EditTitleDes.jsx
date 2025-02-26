@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams , useNavigate } from 'react-router-dom';
+import Input from '../input'
+
+
 
 function EditTitleDes() {
   const { VideoId } = useParams();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+   const [message , setMessage] = useState("")
+   const [DeleteMessage , SetDeleteMessage] = useState("")
+   const Navigate = useNavigate()
 
   // Define the update handler outside of useEffect
   const handleUpdate = async () => {
     try {
       const response = await axios.patch(
-        `/videos/update/c/${VideoId}`,
+        `/api/videos/update/c/${VideoId}`,
         {
            title : title,
            description: description
@@ -23,10 +29,25 @@ function EditTitleDes() {
         }
       );
       console.log("Video updated successfully:", response.data);
+       setMessage("Video Details Updated Sucessfullyy")
+       Navigate('/')
     } catch (error) {
       console.log(error, "Error while editing video details");
     }
   };
+
+  const HandleDelete = async () => {
+    try {
+      await axios.delete(`/api/videos/delete/c/${VideoId}`)
+      console.log("Video Deleted Sucessfully")
+      SetDeleteMessage("Video Deleted Sucessfully!")
+      Navigate('/')
+    } catch (error) {
+      console.log("error while deleting the video")
+    }
+  }
+
+  
 
   return (
     <div className="p-4">
@@ -34,7 +55,7 @@ function EditTitleDes() {
         <label htmlFor="title" className="block text-sm font-medium mb-1">
           Title
         </label>
-        <input
+        <Input
           id="title"
           type="text"
           value={title}
@@ -57,12 +78,28 @@ function EditTitleDes() {
         />
       </div>
       <button
-        onClick={handleUpdate}
+        onClick={() => handleUpdate()}
         className="bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded"
       >
         Update
       </button>
+      {message && (
+        <p> Video Details updated Sucessfully!!</p>
+      )}
+
+       <button
+                  onClick={() => HandleDelete()}
+                  className="bg-red-500 hover:bg-red-600 text-white text-xs py-1 px-2 rounded"
+                >
+                  Delete
+                </button>
+                {DeleteMessage && (
+                  <p> Video Deleted Sucessfully!</p>
+                )}
     </div>
+ 
+
+
   );
 }
 
