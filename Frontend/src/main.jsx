@@ -20,6 +20,8 @@ import VideosUpload from "./Pages/VideosUpload";
 import VideoPlayerPage from "./Pages/VideoPlayer";
 import ManageVideosss from './Pages/ManageVideossss'
 import EditTitleDes from "./Components/Video/EditTitleDes";
+import EditComments from "./Components/Comments/EditComments";
+import ChannelInfo from "./Components/Channel/ChannelInfo";
 // Define routes
 const Router = createBrowserRouter([
   {
@@ -111,7 +113,7 @@ const Router = createBrowserRouter([
         )
       },
      {
-      path: "/watch/c/:VideoId",
+      path: "/watch/c/:VideoId/c/:ChannelId",
       element: (
         <AuthLayout authentication = {true}
         >
@@ -134,7 +136,24 @@ const Router = createBrowserRouter([
        <EditTitleDes/>
         </AuthLayout>
       )
-     }
+     },
+     {
+      path: "/Comments/update/c/:VideoId/c/:CommentId",
+      element: (
+        <AuthLayout authentication={true}>
+          <EditComments />
+        </AuthLayout>
+      )
+    },
+    {
+      path: "/channelInfo/c/:ChannelId",
+      element: (
+        <AuthLayout>
+          <ChannelInfo/>
+        </AuthLayout>
+      )
+    }
+    
        ],
   },
 ]);

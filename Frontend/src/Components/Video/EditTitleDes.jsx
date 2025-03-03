@@ -19,7 +19,7 @@ function EditTitleDes() {
       const response = await axios.patch(
         `/api/videos/update/c/${VideoId}`,
         {
-           title : title,
+           title : title, 
            description: description
         },
         {

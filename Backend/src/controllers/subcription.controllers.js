@@ -25,16 +25,24 @@ const ToggleSubcription = asyncHandler(async(req , res) => {
 
     const Subscriptionsssss = await Subscription.findOne(
       {
-        subcriber: UserId,
+        subcriber: UserId, // finding which user has subs to the channel 
         channel: channelId
       }
     )
     if (Subscriptionsssss) {
-      await Subscription.findByIdAndDelete(
+      await Subscription.deleteMany(
         {
           subcriber: UserId,
           channel: channelId,
-        }
+        },
+        console.log("User has already subscribed to the channel ")
+      )
+      return res.status(200).json(
+        new ApiResponse(200 , {
+          subcriber: UserId,
+          channel: channelId,
+          message: "Chanel UNSUBCRIBED sucessfully!"
+        })
       )
     } else {
       await Subscription.create(
@@ -43,14 +51,18 @@ const ToggleSubcription = asyncHandler(async(req , res) => {
           channel : channelId
         }
       )
+      return res.status(200).json(
+        new ApiResponse(200, {
+          subcriber: UserId ,  // Corrected 'subcriber' to 'subscriber' and using 'userId' variable
+          channel: channelId,
+          message: "Channel Subscribed Successfully"  // Corrected spelling of 'Subbed' to 'Subscribed'
+        })
+      )
     }
-    return res.status(200).json(
-      new ApiResponse(200, {
-        subcriber: UserId ,  // Corrected 'subcriber' to 'subscriber' and using 'userId' variable
-        channel: channelId,
-        message: "Channel Subscribed Successfully"  // Corrected spelling of 'Subbed' to 'Subscribed'
-      })
-    )
+     if (!Subscriptionsssss) {
+      console.log("failed")
+     }
+   
 
 })
 

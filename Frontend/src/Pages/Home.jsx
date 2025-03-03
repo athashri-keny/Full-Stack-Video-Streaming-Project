@@ -34,10 +34,10 @@ const [videos , setVideos] = useState([])
               <p className="text-center text-gray-600">Loading videos...</p>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                {videos.map((video) => (
+                {videos.map((video ) => (
                   <Link
                     key={video._id}
-                    to={`/watch/c/${video._id}`}
+                    to={`/watch/c/${video._id}/c/${video.owner}`}
                     className="block bg-white rounded-lg shadow-md overflow-hidden"
                   >
                     {/* Thumbnail */}

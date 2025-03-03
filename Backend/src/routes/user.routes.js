@@ -41,7 +41,7 @@ router.route("/register").post(
     );
     
 
-   router.route("/c/:username").get(verifyjwt , getUserChannelProfile)
+   router.route("/c/:channelId").get(verifyjwt , getUserChannelProfile)
 
    router.route("/history").get(verifyjwt , GetWatchHistory)
 

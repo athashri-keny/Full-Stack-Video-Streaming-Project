@@ -4,7 +4,7 @@ import { verifyjwt } from "../middlewares/auth.middleware.js";
 
 const router = Router()
 
-router.route("/substochannel/c/:channelId").get(verifyjwt , ToggleSubcription)
+router.route("/substochannel/c/:channelId").post(verifyjwt , ToggleSubcription)
 router.route("/getchannelsubs/c/:channelId").get(verifyjwt , getUserChannelSubscribers)
 router.route("/subschannel/c/:subcriberId").get(verifyjwt , getSubscribedChannels)
 

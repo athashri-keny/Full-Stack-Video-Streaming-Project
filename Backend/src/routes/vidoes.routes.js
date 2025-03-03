@@ -18,7 +18,7 @@ router.route("/upload").post( verifyjwt,
 );
 
 
-router.route("/c/:VideoId").get( verifyjwt , getVideoAndChannelProfile);
+router.route("/c/:VideoId/c/:ChannelId").get( verifyjwt , getVideoAndChannelProfile);
 router.route("/update/c/:VideoId").patch(UpdateVideodetails);
 router.route("/delete/c/:VideoId").delete(DeleteVideo);
 router.route("/Publishstatus/c/:VideoId").get(TogglePublishStatus)

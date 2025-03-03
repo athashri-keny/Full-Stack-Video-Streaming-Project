@@ -18,6 +18,7 @@ export default function Protected({ children, authentication = true }) {
 
       console.log('Redirecting to /login');
       navigate('/login');
+      
     } else if (!authentication && authStatus) {
       console.log('Redirecting to /');
       navigate('/');

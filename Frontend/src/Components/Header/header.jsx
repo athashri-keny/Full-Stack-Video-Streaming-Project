@@ -1,11 +1,14 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link,  } from 'react-router-dom';
 import LogoutBtn from './LogoutBtn';
 import UserInfoButton from './UserInfoButton';
+import { changeMode } from '../../Store/ThemeSlice';
 
 function Header() {
   const authStatus = useSelector((state) => state.auth.status); // Get auth state
+  const darkMode = useSelector((state) => state.theme.status)
+const dispatch = useDispatch()
 
   const navItems = [
     {
@@ -65,6 +68,7 @@ console.log('current auth status = ', authStatus)
           </ul>
         </div>
       </nav>
+      
     </div>
   );
 }

@@ -123,11 +123,14 @@ const publishVideo = asyncHandler(async (req, res) => {
 
 
 const getVideoAndChannelProfile = asyncHandler(async (req, res) => {
-  const { VideoId } = req.params; // Expecting a valid VideoId from URL parameters
+  const { VideoId , ChannelId } = req.params; // Expecting a valid VideoId from URL parameters
   const userID = req.user._id
   
   if (!VideoId) {
     throw new ApiError(400, "Video ID is required!");
+  }
+  if (!ChannelId) {
+    console.log("Channel id not found")
   }
 
   // Fetch the video details by VideoId

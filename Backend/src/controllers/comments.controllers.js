@@ -80,52 +80,57 @@ const ADDComments = asyncHandler(async(req , res) => {
         ApiResponse, // Include this if it holds relevant data
     });
 })
+const UpdateComment = asyncHandler(async (req, res) => {
+    const userID = req.user._id;
 
-const UpdateComment = asyncHandler(async(req , res) => {
-    // finding the User in database check wheater the user is login or not
-    // taking the video id from database
-    // finding the comment in database
-    // taking the New Comment from the User 
-    // saving the new as updatedcomment in database
-    // returing the response to the user
-    const userID = req.user._id
-
-    const User = await user.findById(userID)
+    const User = await user.findById(userID);
     if (!User) {
-        throw new ApiError(400 , "User not Found in database")
-    } 
+        throw new ApiError(400, "User not Found in database");
+    }
 
-    const {UpdatedComment} = req.body
+    const { UpdatedComment } = req.body;
     if (!UpdatedComment) {
-        throw new ApiError(404 , "New comment Content required!")
+        throw new ApiError(404, "New comment content required!");
     }
 
-    const {CommentId} = req.params 
+    const { CommentId } = req.params;
     if (!CommentId) {
-        throw new ApiError(404 , "Comment Id required!")
+        throw new ApiError(404, "Comment Id required!");
     }
-    const {VideoId} = req.params
-    if (!VideoId) {
-        throw new ApiError(404 , "Video id required!")
+    if (!mongoose.Types.ObjectId.isValid(CommentId)) {
+        throw new ApiError(400, "Invalid Comment ID");
     }
 
-   const comment = await Comment.findOneAndUpdate(
-      {content: UpdatedComment ,
-        video: VideoId,
-        Owner: userID
-      }
-   )
-    if (!comment) {
-        throw new ApiError(404 , "something went Wrong while updating commnent!")
+    const { VideoId } = req.params;
+    if (!VideoId) {
+        throw new ApiError(404, "Video id required!");
     }
+    if (!mongoose.Types.ObjectId.isValid(VideoId)) {
+        throw new ApiError(400, "Invalid Video ID");
+    }
+
+    // Check if the comment exists, belongs to the user and video, then update
+    const comment = await Comment.findOneAndUpdate(
+        {
+            _id: CommentId,
+            video: VideoId,
+            Owner: userID
+        },
+        { content: UpdatedComment },
+        { new: true } // Returns the updated document
+    );
+
+    if (!comment) {
+        throw new ApiError(404, "Comment not found or you don't have permission");
+    }
+
     return res.status(200).json({
-        success: true, // Indicates the update was successful
-        message: "Comment updated successfully!", // Clear success message
-        ApiResponse, // Include any API response data if necessary
-        updatedComment: UpdatedComment, // Include the updated comment
+        success: true,
+        message: "Comment updated successfully!",
+        data: comment
     });
-    
-})
+});
+
 
 const DeleteComment = asyncHandler(async(req , res) => {
     const VideoId = req.params

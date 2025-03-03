@@ -376,80 +376,77 @@ const updateUserCoverImg = asyncHandler(async(req , res) => {
 })
 
 
-const getUserChannelProfile = asyncHandler(async(req , res) => {
-     const {username} = req.params // params means URl 
-     if(!username?.trim()) {
-        throw new ApiError(400 , "Username is missing")
-     }
-    
-       const channel = await user.aggregate([
-        {
-           // Finds the user whose username matches the one provided in the URL.
-            $match: {
-                username:username?.toLowerCase()
-            }
-        },
-        // Lookup the channel's subscribers
-        {
-            $lookup: {
-                from: "subscriptions",
-                localField: "_id",
-                foreignField: "channel",
-                as: "subcribers"
-            }
-            // Lookup channels the user subscribed to
-        }, {
-            $lookup: {
-                from: "subscriptions",
-                localField: "_id",
-                foreignField: "subcriber",
-                as: "subcribedto"
-            }
-            // Add calculated fields
-        }, { 
-            $addFields: {
-                subscibersCount: {
-                    $size: "$subcribers" // Counts the number of subscribers.
-                },
-                channelssubscribedtoCount: { 
-                    $size: "$subcribedto" // Counts the number of channels the user has subscribed to
-                },
 
-//  Checks if the logged-in user (req.User?._id) is in the list of subscribers.
-                isSubscribed: {
-                    $cond: {
-                        if: {$in: [req.User?._id , "$subcribers.subcriber"]}, // $in checks if value exists in array
-                        then: true,
-                        else: false
-                    }
-                }
-            }
-            // Project the final result
-        },
-        {
-            $project:{
-                fullname: 1,
-                username: 1,
-                subscibersCount: 1,
-                channelssubscribedtoCount: 1,
-                isSubscribed: 1, 
-                avatar: 1,
-                coverImage: 1,
-                email: 1,
-            }
+const getUserChannelProfile = asyncHandler(async (req, res) => {
+  const { channelId } = req.params; // channelId from URL
+  if (!channelId?.trim()) {
+    throw new ApiError(400, "Channel ID is missing");
+  }
+
+  const channel = await user.aggregate([
+    {
+      // Find the user whose _id matches the provided channelId
+      $match: {
+        _id: new mongoose.Types.ObjectId(channelId)
+      }
+    },
+    // Lookup the channel's subscribers
+    {
+      $lookup: {
+        from: "subscriptions",
+        localField: "_id",
+        foreignField: "channel",
+        as: "subcribers"
+      }
+    },
+    // Lookup the channels the user subscribed to
+    {
+      $lookup: {
+        from: "subscriptions",
+        localField: "_id",
+        foreignField: "subcriber",
+        as: "subcribedto"
+      }
+    },
+    // Add calculated fields
+    {
+      $addFields: {
+        subscibersCount: { $size: "$subcribers" },
+        channelssubscribedtoCount: { $size: "$subcribedto" },
+        // Checks if the logged-in user (req.User?._id) is in the list of subscribers.
+        isSubscribed: {
+          $cond: {
+            if: { $in: [req.User?._id, "$subcribers.subcriber"] },
+            then: true,
+            else: false
+          }
         }
-       ])
-         //  Handle if No User Found
-       if(!channel?.length) {
-        throw new ApiError(404 , "channel does not exist")
-       }
+      }
+    },
+    // Project only the fields you want to return
+    {
+      $project: {
+        fullname: 1,
+        username: 1,
+        subscibersCount: 1,
+        channelssubscribedtoCount: 1,
+        isSubscribed: 1,
+        avatar: 1,
+        coverImage: 1,
+        email: 1,
+      }
+    }
+  ]);
 
-       return res
-       .status(200)
-       .json(
-        new ApiResponse(200 , channel[0] , "user fetched successfully")
-       )
-})
+  // Handle if no user/channel found
+  if (!channel?.length) {
+    throw new ApiError(404, "channel does not exist");
+  }
+
+  return res.status(200).json(
+    new ApiResponse(200, channel[0], "User fetched successfully")
+  );
+});
 
 const GetWatchHistory = asyncHandler(async(req , res) => {
     // mongoose
