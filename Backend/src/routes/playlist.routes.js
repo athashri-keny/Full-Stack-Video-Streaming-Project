@@ -5,7 +5,7 @@ const router = Router(); // Initialize the router correctly
 
 // Define routes
 router.route("/CreatePlaylist").post( verifyjwt , CreatePlaylist);
-router.route("/UserPlaylist/c/:userID").get(verifyjwt, getUserplaylists);
+router.route("/UserPlaylist").get( verifyjwt ,  getUserplaylists);
 
 // Get details of a specific playlist by PlaylistId
 router.route("/playlist/c/:PlaylistId").get( GetPlaylistID);

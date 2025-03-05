@@ -4,11 +4,19 @@ import { Link,  } from 'react-router-dom';
 import LogoutBtn from './LogoutBtn';
 import UserInfoButton from './UserInfoButton';
 import { changeMode } from '../../Store/ThemeSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon } from '@fortawesome/free-solid-svg-icons';
+import { faSun } from '@fortawesome/free-solid-svg-icons';
+
+
 
 function Header() {
   const authStatus = useSelector((state) => state.auth.status); // Get auth state
-  const darkMode = useSelector((state) => state.theme.status)
+  const darkMode = useSelector((state) => state.theme.DarkMode)
+  // console.log(darkMode)
+
 const dispatch = useDispatch()
+
 
   const navItems = [
     {
@@ -33,18 +41,17 @@ const dispatch = useDispatch()
     }
   ];
 console.log('current auth status = ', authStatus)
-  // map function is used to render dynamially if the authstatus is false the login and signup will be showen
-  return (
-    <div>
-      {/* Navigation Bar */}
-      <nav className="bg-gray-800 p-4">
-        <div className="container mx-auto flex justify-between">
-          <h1 className="text-white text-xl font-bold">
-            <Link to="/">My App</Link>
-          </h1>
-          <ul className="flex space-x-4">
-            {navItems.map((item, index) =>
-              item.active ? (
+  
+  return(
+    <nav className="bg-gray-800 p-4">
+      <div className="container mx-auto flex justify-between items-center">
+        <h1 className="text-white text-xl font-bold">
+          <Link to="/">My App</Link>
+        </h1>
+        <ul className="flex space-x-4">
+          {navItems.map(
+            (item, index) =>
+              item.active && (
                 <li key={index}>
                   <Link
                     to={item.slug}
@@ -53,24 +60,25 @@ console.log('current auth status = ', authStatus)
                     {item.name}
                   </Link>
                 </li>
-              ) : null
-            )}
-            {authStatus && (
-              <li>
-                <LogoutBtn /> {/* Show Logout button if logged in */}
-              </li>
-            )}
-            {authStatus && (
-              <li>
-                <UserInfoButton/>
-              </li>
-            )}
-          </ul>
-        </div>
-      </nav>
-      
-    </div>
-  );
+              )
+          )}
+          {authStatus && <li><LogoutBtn /></li>}
+          {authStatus && <li><UserInfoButton /></li>}
+        </ul>
+    
+
+<button
+  className={`p-2 rounded-full transition-all duration-300 ${
+    darkMode ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-gray-200 text-black hover:bg-gray-300'
+  }`}
+  onClick={() => dispatch(changeMode())}
+>
+  {darkMode ? <FontAwesomeIcon icon={faMoon}/> : <FontAwesomeIcon icon={faSun}/>}
+</button>
+
+      </div>
+    </nav>
+  ); 
 }
 
 export default Header;

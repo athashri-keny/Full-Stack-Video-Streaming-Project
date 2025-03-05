@@ -37,8 +37,9 @@ const CreatePlaylist = asyncHandler(async(req , res) => {
     })
 }
 )
+
 const getUserplaylists = asyncHandler(async (req, res) => {
-    const { userID } = req.params;
+   const userID = req.user._id
 
     if (!userID) {
         throw new ApiError(404, "User ID is required!");
@@ -49,7 +50,12 @@ const getUserplaylists = asyncHandler(async (req, res) => {
         throw new ApiError(404, "User is invalid");
     }
 
-    const UserPlaylist = await Playlist.find({ owner: User });
+    const UserPlaylist = await Playlist.find({ owner: User })
+    .populate({
+      path: "vidoes",
+      select: "title thumbnail", 
+    });
+      
 
     if (!UserPlaylist || UserPlaylist.length === 0) {
         throw new ApiError(404, "User has no playlists!");
