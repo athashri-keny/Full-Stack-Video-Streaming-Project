@@ -1,7 +1,7 @@
 // src/pages/Playlists.js
 import React from 'react';
 import SideNav from '../Components/SideNav/SideNav';
-import GetuserPlaylists from '../Components/Playlist/GetuserPlaylists';
+import GetAndCreatePlaylist from '../Components/Playlist/GetAndCreatePlaylist';
 
 const Playlists = () => {
   return (
@@ -10,7 +10,7 @@ const Playlists = () => {
       <div className="w-1/4">
         <SideNav />
       </div>
-           <GetuserPlaylists/>
+           <GetAndCreatePlaylist/>
       
     </div>
   );

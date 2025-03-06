@@ -9,7 +9,7 @@ router.route("/UserPlaylist").get( verifyjwt ,  getUserplaylists);
 
 // Get details of a specific playlist by PlaylistId
 router.route("/playlist/c/:PlaylistId").get( GetPlaylistID);
-router.route("/Add/c/:PlaylistId/video/c/:videoID").post(addvidoeToPlaylist);
-router.route("/remove/c/:PlaylistId/video/c/:videoID").delete(removevideofromplaylist)
+router.route("/AddVideoToPlaylist/c/:videoID").post(addvidoeToPlaylist);
+router.route("/remove/c/:videoID").delete(removevideofromplaylist)
 router.route("/update/c/:PlaylistId").put(updatePlaylist)
 export default router; // Export the router

@@ -99,7 +99,9 @@ const addvidoeToPlaylist = asyncHandler(async (req, res) => {
     // adding the videosid in the playlistid 
     // saving the vidoes in the playlist 
     // returing the response to the user
-    const { PlaylistId, videoID } = req.params;
+    const { videoID } = req.params;
+    const {PlaylistId} = req.body;
+    
     if (!PlaylistId || !videoID) {
         throw new ApiError(404, "Playlist and videoID required!");
     }
@@ -111,10 +113,10 @@ const addvidoeToPlaylist = asyncHandler(async (req, res) => {
         throw new ApiError(404, "Playlist or video ID not found");
     }
 
-    // Make sure to use 'vidoes' instead of 'Videos'
+
     const updatedPlaylist = await Playlist.findByIdAndUpdate(
         PlaylistId,
-        { $addToSet: { vidoes: videoID } },  // Use 'vidoes' here
+        { $addToSet: { vidoes: videoID } },  
         { new: true }
     );
 
@@ -141,7 +143,9 @@ const removevideofromplaylist = asyncHandler(async(req , res) => {
     // saving the playlist
     // returing the response to user 
 
-    const {PlaylistId , videoID} = req.params
+    const { videoID} = req.params
+    const {PlaylistId} = req.body
+    
     if (!PlaylistId || !videoID) {
         throw new ApiError(404 , "Playlist and videoId not found")
     }

@@ -9,6 +9,7 @@ import { faThumbsUp, faThumbsDown, faEllipsisVertical } from '@fortawesome/free-
 import Addcomment from '../Components/Comments/Addcomments';
 import EditComments from '../Components/Comments/EditComments';
 import ChannelInfo from '../Components/Channel/ChannelInfo'
+import AddVideoToPlaylist from '../Components/Playlist/AddVideoToPlaylist';
 
 const VideoPlayerPage = () => {
   const [video, setVideo] = useState(null);
@@ -149,6 +150,7 @@ const [channelSubButton , setChannelSubButton] = useState(false)
             </button>
           )
         )}
+        <AddVideoToPlaylist/>
       </div>
     )}
   
