@@ -1,40 +1,35 @@
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import React, { useState } from 'react'
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import SideNav from '../Components/SideNav/SideNav'
 
-function Home() {
+function VideoHistory() {
 const [videos , setVideos] = useState([])
+useEffect(() => {
+    
+try {
+    const FetchHistory =  async () => {
+     const response =  await axios.get("/api/users/history")
+     console.log(response , "Watch History Fetch Successfully")
+     setVideos(response.data.data)
+    }
+ FetchHistory()
+  } catch (error) {
+      console.error("Error while fetching watch History")
+  }
+} , [])
 
-    useEffect(() => {
-        const fetchVideos = async () => {
-            try {
-                const response = await axios.get('/api/videos') // get all videos 
-                console.log( "Video Fetched Sucessfully" , response.data.videos)
-                setVideos(response.data.videos)
-            } catch (error) {
-                console.log(error , "error while fetching the video")
-            }
-        }
-        fetchVideos()
-    } , [])
-
-    return (
-      <div className="container mx-auto p-2"> {/* Reduced padding from p-6 to p-2 */}
-        <div className="flex">
-          {/* Left Sidebar */}
-          <div className="w-1/4 pr-2"> {/* Reduced margin from mr-4 to pr-2 */}
-            <SideNav />
-          </div>
-          {/* Main Content / Video Grid */}
-          <div className="flex-1">
+  return (
+    <div>
+        <div>
+            <div>
+         {/* Main Content / Video Grid */}
+         <div className="flex-1">
             {videos.length === 0 ? (
-              <p className="text-center text-gray-600">Loading videos...</p>
+              <p className="text-center text-gray-600"> No Watch History</p>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                 {videos.map((video ) => (
-                  <Link
+                  <div
                     key={video._id}
                     to={`/watch/c/${video._id}/c/${video.owner}`}
                     className="block bg-white rounded-lg shadow-md overflow-hidden"
@@ -54,15 +49,15 @@ const [videos , setVideos] = useState([])
                         <span>Likes: {video.likes}</span>
                       </div>
                     </div>
-                  </Link>
+                </div>
                 ))}
               </div>
             )}
           </div>
         </div>
       </div>
-    );
-    };
-    
- 
-export default Home
+    </div>
+  )
+}
+
+export default VideoHistory

@@ -15,12 +15,10 @@ import UpdateAccountDetails from "./Components/UpdateAccountDetails";
 import History from './Pages/History'
 import LikedVideos from './Pages/LikedVideos'
 import Playlist from './Pages/Playlist'
-import Tweets from './Pages/Tweets'
 import VideosUpload from "./Pages/VideosUpload";
 import VideoPlayerPage from "./Pages/VideoPlayer";
 import ManageVideosss from './Pages/ManageVideossss'
 import EditTitleDes from "./Components/Video/EditTitleDes";
-import EditComments from "./Components/Comments/EditComments";
 import ChannelInfo from "./Components/Channel/ChannelInfo";
 // Define routes
 const Router = createBrowserRouter([
@@ -96,14 +94,7 @@ const Router = createBrowserRouter([
           </AuthLayout>
         )
       },
-      {
-        path: "/tweets",
-        element: (
-          <AuthLayout authentication = {true}>
-            <Tweets/>
-          </AuthLayout>
-        )
-      },
+      
       {
         path: "/upload",
         element: (
@@ -137,14 +128,7 @@ const Router = createBrowserRouter([
         </AuthLayout>
       )
      },
-     {
-      path: "/Comments/update/c/:VideoId/c/:CommentId",
-      element: (
-        <AuthLayout authentication={true}>
-          <EditComments />
-        </AuthLayout>
-      )
-    },
+     
     {
       path: "/channelInfo/c/:ChannelId",
       element: (

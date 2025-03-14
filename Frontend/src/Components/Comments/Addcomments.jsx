@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import Input from '../input'
 
 function Addcomment() {
     const {VideoId} = useParams()
       const [CommentContent , SetCommentContent] = useState("")
       const [message , setMessage] = useState("")
-
+     
 
       
      const handleComSubmit = async (e) => {
@@ -19,7 +19,7 @@ function Addcomment() {
         
         
         try {
-          const response = await axios.post(`/api/comments/Add/c/${VideoId} ` ,   
+          await axios.post(`/api/comments/Add/c/${VideoId} ` ,   
              {Content: CommentContent}
             , {
               headers: {
@@ -31,7 +31,6 @@ function Addcomment() {
           setTimeout(() => {
             setMessage("Commentted added sucessfully on this video!")
           }, 2000);
-          
         } catch (error) {
           console.error("Error in AddComment:", error);
         }

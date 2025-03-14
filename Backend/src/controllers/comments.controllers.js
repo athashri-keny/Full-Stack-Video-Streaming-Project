@@ -4,7 +4,10 @@ import {ApiError} from "../utils/ApiError.js"
 import { Comment } from "../models/commet.model.js";
 import mongoose from "mongoose";
 import { user } from "../models/user.model.js";
+import {Video} from '../models/video.model.js'
 // This function retrieves comments for a specific video.
+
+
 
 const GetVideoComment = asyncHandler(async(req , res) => {
     const {VideoId } = req.params
@@ -42,13 +45,41 @@ const GetVideoComment = asyncHandler(async(req , res) => {
 )
 });
 
+
+const GetCommentId = asyncHandler(async( req , res) => {
+    const  {VideoId} = req.params
+    const UserId = req.user._id
+
+  if (!UserId) {
+    console.log("User not found")
+  }
+
+
+
+ const comment = await Comment.findOne({VideoId: VideoId})
+
+ const Userr = await user.findById( new mongoose.Types.ObjectId(UserId))
+
+
+  return res
+  .status(200)
+  .json(
+      {
+       ApiResponse,
+       CommentId :  comment,
+       owner : Userr
+  }
+)
+})
+
+
 const ADDComments = asyncHandler(async(req , res) => {
     // find the User in database
     // take the videoId and Comment content from the req.body(User)
     // save the Comment in database
     // return response 
-     const userID = req.user._id
-     if (!userID) {
+    const UserID = req.user._id
+     if (!UserID) {
         throw new ApiError(400 , "User is required!")
      }
     const {VideoId} = req.params
@@ -61,7 +92,7 @@ const ADDComments = asyncHandler(async(req , res) => {
         throw new ApiError(404 , "Comments content required!!")
     }
      
-    const User = await user.findById(userID)
+    const User = await user.findById(UserID)
     if (!User) {
         throw new ApiError(400 , "User not Found in database")
     } 
@@ -69,7 +100,7 @@ const ADDComments = asyncHandler(async(req , res) => {
     // creating comment 
     const comment = await Comment.create({
         video : VideoId,
-        owner: userID,
+        owner: UserID,
         content: Content
     })
 
@@ -80,6 +111,9 @@ const ADDComments = asyncHandler(async(req , res) => {
         ApiResponse, // Include this if it holds relevant data
     });
 })
+
+
+
 const UpdateComment = asyncHandler(async (req, res) => {
     const userID = req.user._id;
 
@@ -93,10 +127,11 @@ const UpdateComment = asyncHandler(async (req, res) => {
         throw new ApiError(404, "New comment content required!");
     }
 
-    const { CommentId } = req.params;
+    const { CommentId } = req.body;
     if (!CommentId) {
         throw new ApiError(404, "Comment Id required!");
     }
+
     if (!mongoose.Types.ObjectId.isValid(CommentId)) {
         throw new ApiError(400, "Invalid Comment ID");
     }
@@ -113,15 +148,13 @@ const UpdateComment = asyncHandler(async (req, res) => {
     const comment = await Comment.findOneAndUpdate(
         {
             _id: CommentId,
-            video: VideoId,
-            Owner: userID
-        },
+       },
         { content: UpdatedComment },
         { new: true } // Returns the updated document
     );
 
     if (!comment) {
-        throw new ApiError(404, "Comment not found or you don't have permission");
+        throw new ApiError(404, "Comment not found ");
     }
 
     return res.status(200).json({
@@ -133,35 +166,38 @@ const UpdateComment = asyncHandler(async (req, res) => {
 
 
 const DeleteComment = asyncHandler(async(req , res) => {
-    const VideoId = req.params
+    const {VideoId} = req.params
     if (!VideoId) {
         throw new ApiError(404 , "Video ID is required!")
     }
-    const CommentId = req.params
+    
+    const video = await Video.findById(new mongoose.Types.ObjectId(VideoId))
+
+    const {CommentId} = req.body
     if (!CommentId) {
         throw new  ApiError(400 , "Comment Id is required!")
     }
 
-    const FindComment = await Comment.findOneAndUpdate({
-         CommentId,
-        video: VideoId
-    })
+
+
+    const FindComment = await Comment.findByIdAndDelete(new mongoose.Types.ObjectId(CommentId));
+
     if (!FindComment) {
         throw new ApiError(404, "Cannot delete comment! Comment not found.");
     }
 
-    return res
-    .status(200)
-    .json(
-        ApiResponse , "comment deleted Sucessfully!"
-    )
+
+
+    return res.status(200).json({ message: "comment deleted Successfully!" });
+
 })
 
 export {
     ADDComments,
     UpdateComment,
     DeleteComment,
-    GetVideoComment
+    GetVideoComment,
+    GetCommentId
 }
 
 

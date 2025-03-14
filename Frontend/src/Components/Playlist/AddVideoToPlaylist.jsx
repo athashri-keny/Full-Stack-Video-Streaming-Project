@@ -60,8 +60,6 @@ function AddVideoToPlaylist() {
   }
 
 
-
-
   const checkVideoInPlaylist = () => {
     return playlists.some(playlist => 
       playlist.vidoes.some(video => video._id === VideoId)

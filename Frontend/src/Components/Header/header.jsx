@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link,  } from 'react-router-dom';
 import LogoutBtn from './LogoutBtn';
@@ -7,14 +7,25 @@ import { changeMode } from '../../Store/ThemeSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { faSun } from '@fortawesome/free-solid-svg-icons';
-
+import axios from "axios";
 
 
 function Header() {
   const authStatus = useSelector((state) => state.auth.status); // Get auth state
   const darkMode = useSelector((state) => state.theme.DarkMode)
+  const [Avatar , setAvatar ] = useState("")
   // console.log(darkMode)
 
+  useEffect(() => {
+    axios.get('api/users/current-user' ,  {withCredentials: true} )
+    .then((response) => {
+      if (response.data) {
+        console.log('user fetched sucessfully!')
+        setAvatar(response.data.data.coverImage)
+        console.log(response)
+       }
+    })
+  } , [])
 const dispatch = useDispatch()
 
 
@@ -43,8 +54,11 @@ const dispatch = useDispatch()
 console.log('current auth status = ', authStatus)
   
   return(
-    <nav className="bg-gray-800 p-4">
-      <div className="container mx-auto flex justify-between items-center">
+    <div>
+    <nav  className={`p-4 shadow-md transition-all duration-300 ${
+        darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-800"
+      }`}>
+      <div className="flex ">
         <h1 className="text-white text-xl font-bold">
           <Link to="/">My App</Link>
         </h1>
@@ -63,10 +77,20 @@ console.log('current auth status = ', authStatus)
               )
           )}
           {authStatus && <li><LogoutBtn /></li>}
-          {authStatus && <li><UserInfoButton /></li>}
-        </ul>
+             </ul>
     
-
+ {/* User Info & Avatar */}
+ {authStatus && (
+            <div className="flex items-center space-x-3">
+              {/* Avatar Image */}
+              <img
+                src={Avatar} 
+               className="w-8 h-8 rounded-full border-2 border-gray-300"
+              />
+              {/* User Info Button */}
+              <UserInfoButton />
+            </div>
+          )}
 <button
   className={`p-2 rounded-full transition-all duration-300 ${
     darkMode ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-gray-200 text-black hover:bg-gray-300'
@@ -77,7 +101,9 @@ console.log('current auth status = ', authStatus)
 </button>
 
       </div>
+      
     </nav>
+    </div>
   ); 
 }
 

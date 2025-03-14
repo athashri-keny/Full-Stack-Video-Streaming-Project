@@ -1,15 +1,16 @@
 // VideoPlayerPage.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,  } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import CloudinaryPlayer from '../Components/Cloudinary/CloudinaryPlayer';
 import Input from '../Components/input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faThumbsDown, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import Addcomment from '../Components/Comments/Addcomments';
-import EditComments from '../Components/Comments/EditComments';
-import ChannelInfo from '../Components/Channel/ChannelInfo'
 import AddVideoToPlaylist from '../Components/Playlist/AddVideoToPlaylist';
+import EditComments from '../Components/Comments/EditComments';
+
+
 
 const VideoPlayerPage = () => {
   const [video, setVideo] = useState(null);
@@ -20,10 +21,11 @@ const VideoPlayerPage = () => {
   const [notification, setNotification] = useState("");
   const { VideoId , ChannelId} = useParams();
   const navigate = useNavigate();
-  const [activeComEdit, setActiveComEdit] = useState(null);
+
 const [channelSubButton , setChannelSubButton] = useState(false)
   const [subscribeChannel , setsubscribeChannel] = useState("")
-  const [channelInfo , setChannelInfo] = useState("")
+
+
 
 
 
@@ -37,15 +39,14 @@ const [channelSubButton , setChannelSubButton] = useState(false)
         setChannelData(response.data.data.channel);
         setOwnerComment(response.data.data.Userr);
         setsubscribeChannel(response.data.data.channel._id)
-        console.log(response.data.data.channel._id);
-        console.log(response)
+          console.log(response)
       } catch (error) {
         console.error('Error fetching video:', error);
         navigate('/');
       }
     };
     fetchVideoData();
-  }, [VideoId, navigate]);
+  }, []);
 
   // Like function
   const fetchLike = async () => {
@@ -61,14 +62,6 @@ const [channelSubButton , setChannelSubButton] = useState(false)
     }
   };
 
-  // Toggle the Manage Comment dropdown for a comment
-  const toggleManageComment = (index) => {
-    if (activeComEdit === index) {
-      setActiveComEdit(null);
-    } else {
-      setActiveComEdit(index);
-    }
-  };
 
 
   // subscribe
@@ -109,7 +102,7 @@ const [channelSubButton , setChannelSubButton] = useState(false)
       />
     </div>
 
-  
+   
     <div className="flex items-center justify-between mt-4">
       <h1 className="text-2xl font-bold transition-colors duration-300 hover:text-blue-600">
         {video?.title || 'Video Title'}
@@ -132,7 +125,7 @@ const [channelSubButton , setChannelSubButton] = useState(false)
             <img src={channel.avatar} alt="Channel Avatar" className="w-12 h-12 rounded-full object-cover shadow-md transition-transform transform hover:scale-110" />
           <div>
             <p className="font-medium text-lg">{channel.username || 'Channel Name'}</p>
-            <p className="text-sm text-gray-500">Subscribers {channel.subscribersCount}</p>
+            <p className="text-sm text-gray-500">Subscribers {channel.subscibersCount}</p>
           </div>
         </div>
         <button onClick={handleChannelRedirect} className="text-blue-600 hover:underline transition duration-300">
@@ -140,7 +133,7 @@ const [channelSubButton , setChannelSubButton] = useState(false)
           </button>
           <Link to={`/channelInfo/c/${channel._id}`}></Link>
         {channelSubButton === false ? (
-          <button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-300 transform hover:scale-105">
+          <button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-300 transform hover:scale-105" onClick={HandleSubscribe}>
             Subscribe
           </button>
         ) : (
@@ -166,10 +159,10 @@ const [channelSubButton , setChannelSubButton] = useState(false)
       {/* Comments List */}
       <div className="space-y-4">
         {comments.length > 0 ? (
-          comments.map((comment, index) => (
+          comments.map((comment) => (
             <div key={comment._id} className="flex items-start space-x-3 bg-white p-3 rounded-lg shadow ">
               <div className="w-10 h-10">
-                <img
+                      <img
                   src={ownerComment?.avatar}
                   alt={ownerComment?.username}
                   className="w-full h-full object-cover rounded-full shadow-md transition-transform transform hover:scale-110"
@@ -179,23 +172,7 @@ const [channelSubButton , setChannelSubButton] = useState(false)
                 <p className="font-medium">{ownerComment?.username}</p>
                 <p className="text-gray-700">{comment.content || 'This is a comment on the video.'}</p>
               </div>
-              <div className="ml-auto relative">
-                <FontAwesomeIcon
-                  icon={faEllipsisVertical}
-                  onClick={() => toggleManageComment(index)}
-                  className="cursor-pointer transition-transform transform hover:scale-110"
-                />
-                {activeComEdit === index && (
-                  <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md z-10">
-                    <Link
-                      to={`/Comments/update/c/${VideoId}/c/${comment._id}`}
-                      className="block w-full text-left px-4 py-2 hover:bg-gray-100 transition duration-300"
-                    >
-                      Manage Comment
-                    </Link>
-                  </div>
-                )}
-              </div>
+             <EditComments comment={comment} />       
             </div>
           ))
         ) : (

@@ -5,7 +5,7 @@ import Header from "./Components/Header/header";
 import Footer from "./Components/Footer/Footer";
 import SideNav from "./Components/SideNav/SideNav";
 
-import axios from "axios";
+
 import { useSelector } from "react-redux";
 
 function App() {
@@ -19,12 +19,6 @@ function App() {
   } , [])
   
 
-  axios.get('api/users/current-user' ,  {withCredentials: true} )
-  .then((response) => {
-    if (response.data) {
-      console.log('user fetched sucessfully!')
-     }
-  })
 
 
   // console.log(darkMode)

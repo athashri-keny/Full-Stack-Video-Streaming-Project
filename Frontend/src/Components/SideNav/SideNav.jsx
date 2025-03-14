@@ -27,12 +27,7 @@ const SideNav = () => {
               Playlists
             </Link>
           </li>
-          <li>
-            <Link to="/tweets" className="hover:text-gray-400">
-              Tweets
-            </Link>
-          </li>
-          <li>
+           <li>
             <Link to= "/Upload" className='hover:text-gray-400'>
             Upload
             </Link> 

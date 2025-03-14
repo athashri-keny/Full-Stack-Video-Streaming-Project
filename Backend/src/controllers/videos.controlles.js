@@ -9,60 +9,55 @@ import mongoose from "mongoose";
 import { Like } from "../models/like.model.js";
 
 
-// Get all videos with pagination, search, and sorting
 const getallVidoes = asyncHandler(async (req, res) => {
-  // Destructure query parameters with defaults
-  const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
-
-  // Convert page and limit to numbers
+  // Get page and limit from query parameters with default values
+  const { page = 1, limit = 10 } = req.query;
   const pageNum = parseInt(page);
   const limitNum = parseInt(limit);
 
-  
-  // Calculate how many items to skip based on page number and limit
+  // Calculate how many videos to skip for pagination
   const skip = (pageNum - 1) * limitNum;
 
-  // Create search criteria if query is provided
-  const searchCriteria = query
-    ? { 
-        $or: [
-          { title: { $regex: query, $options: "i" } },
-          { description: { $regex: query, $options: "i" } }
-        ] 
+  // Fetch all videos without any search filtering or sorting
+  const videos = await Video.aggregate([
+    { $skip: skip },
+    { $limit: limitNum },
+    {
+      $lookup: {
+        from: "likes", 
+        localField: "_id",
+        foreignField: "video", 
+        as: "likesData"
       }
-    : {}; // If no query, no search filter applied
+    },
+    {
+      $addFields: {
+        likes: { $size: "$likesData" }
+      }
+    },
+    {
+      $project: {
+        likesData: 0 
+      }
+    }
+  ]);
+  // Get the total count of videos for pagination details
+  const totalVideos = await Video.countDocuments({});
 
-  // Create user filter if userId is provided
-  const userFilter = userId ? { user: userId } : {};
-
-  // Combine search and user filters
-  const filter = { ...searchCriteria, ...userFilter };
-
-  // Sorting criteria: If sortBy is specified, use it; default to empty object
-  const sortCriteria = sortBy ? { [sortBy]: sortType === "asc" ? 1 : -1 } : {};
-
-  // Fetch videos based on the filter, pagination, and sorting
-  const videos = await Video.find(filter)
-    .skip(skip)  // Skip items based on page
-    .limit(limitNum)  // Limit items to the specified limit
-    .sort(sortCriteria);  // Sort the videos
-
-  // Get total video count for pagination info
-  const totalVideos = await Video.countDocuments(filter);
-
-  // Return response with video data and pagination details
+  // Respond with videos and pagination information
   return res.status(200).json({
     message: "Videos fetched successfully",
     videos,
     totalVideos,
-    totalPages: Math.ceil(totalVideos / limitNum),  // Calculate total pages
-    currentPage: pageNum,  // Current page number
+    totalPages: Math.ceil(totalVideos / limitNum),
+    currentPage: pageNum,
   });
 });
 
 
 
 import path from 'path';
+import { watch } from "fs";
 
 // publishing the video
 const publishVideo = asyncHandler(async (req, res) => {
@@ -141,6 +136,27 @@ const getVideoAndChannelProfile = asyncHandler(async (req, res) => {
   if (!foundVideo) {
     throw new ApiError(404, "Video not found");
   }
+  
+  // updating the views this updates the views
+  await Video.updateOne(
+    {_id: VideoId },
+  {$inc: {views: 1}}
+) 
+
+// watch history
+ await user.findByIdAndUpdate(
+  req.user._id,
+
+ {
+  $push: {
+    watchHistory: {
+      $each: [new mongoose.Types.ObjectId(VideoId)],
+      $position: 0,
+      $slice: 50
+    }
+  }
+ }
+ )
 
   // Fetch the channel details based on the video's owner.
   // Assuming 'owner' is stored as an ObjectId reference to the user.
