@@ -59,13 +59,14 @@ function AddVideoToPlaylist() {
     }
   }
 
-
+// this is for checking if the video exists in the playlist
   const checkVideoInPlaylist = () => {
     return playlists.some(playlist => 
       playlist.vidoes.some(video => video._id === VideoId)
     );
   };
 
+  
  
 
   return (

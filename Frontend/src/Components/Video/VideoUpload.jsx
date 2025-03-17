@@ -1,16 +1,18 @@
-import React , {useState} from 'react'
+import React , {useState } from 'react'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import Input from '../input'
 import Button from '../Button'
 import { useNavigate } from 'react-router-dom'
-
+import SideNav from '../SideNav/SideNav'
+import { useSelector } from 'react-redux'
 
 function VideoUpload() {
 const [error , SetError] = useState("")
 const {register , handleSubmit} = useForm()
 const [loading , setLoading] = useState(false)
 const Navigate = useNavigate()
+const darkMode = useSelector((state) => state.theme.DarkMode)
 
 
 const upload = async (data) => {
@@ -47,104 +49,130 @@ if (response.data.data) {
 
 
 }
-  return (
-    <div className="flex justify-center items-center min-h-screen bg-black-100">
-    <div className="w-full max-w-md bg-white p-8 rounded shadow">
-      <h2 className="text-2xl font-bold mb-6 text-center">Upload Video</h2>
-      <form onSubmit={handleSubmit(upload)}>
-        {/* Title Field */}
-        <div className="mb-4">
-          <label
-            htmlFor="title"
-            className="block text-gray-700 text-sm font-bold mb-2"
-          >
-            Title
-          </label>
-          <Input
-            type="text"
-            id="title"
-            name="title"
-            placeholder="Enter video title"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
-            {...register("title" , {required: true})}
-          />
-        </div>
 
-        {/* Description Field */}
-        <div className="mb-4">
-          <label
-            htmlFor="description"
-            className="block text-gray-700 text-sm font-bold mb-2"
-          >
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            placeholder="Enter video description"
-            rows="4"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
-            {...register("description" , {required: true})}
-          ></textarea>
-        </div>
+ return (
+  <div className="min-h-screen flex">
+    <div className="w-60 fixed left-0 top-0 h-full bg-gray-800 shadow-lg">
+      <SideNav />
+    </div>
+    <div
+      className={`flex-1 flex justify-center items-center transition-colors duration-300 ${
+        darkMode ? "bg-gray-900" : "bg-gray-100"
+      }`}
+    >
+      <div
+        className={`w-full max-w-lg p-8 rounded-xl shadow-lg transition-all duration-500 transform ${
+          darkMode ? "bg-gray-800" : "bg-white"
+        }`}
+      >
+        <h2 className="text-2xl font-bold mb-6 text-center transition-all duration-300 
+        text-white " >
+          Upload Video
+          <span className="ml-2 animate-pulse">📤</span>
+        </h2>
+        <form onSubmit={handleSubmit(upload)} className="space-y-4">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+              Title
+            </label>
+            <input
+              type="text"
+              placeholder="Enter video title"
+              className="w-full px-4 py-2 rounded-lg border focus:ring-2 transition-all duration-300 
+                bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 
+                focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400"
+              {...register("title", { required: true })}
+            />
+          </div>
 
-        {/* Video File Field */}
-        <div className="mb-4">
-          <label
-            htmlFor="video"
-            className="block text-gray-700 text-sm font-bold mb-2"
-          >
-            Video File
-          </label>
-          <Input
-            type="file"
-            id="video"
-            name="VideoFile"
-            accept = "video/*"
-            className="block w-full text-sm text-gray-500
-                       file:mr-4 file:py-2 file:px-4 file:rounded file:border-0
-                       file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700
-                       hover:file:bg-blue-100"
-                       {...register("VideoFile" ,  {required: true} )}
-          />
-        </div>
+          {/* Description */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+              Description
+            </label>
+            <textarea
+              placeholder="Enter video description"
+              rows="4"
+              className="w-full px-4 py-2 rounded-lg border focus:ring-2 transition-all duration-300 
+                bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 
+                focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-400"
+              {...register("description", { required: true })}
+            />
+          </div>
 
-        {/* Thumbnail Field */}
-        <div className="mb-6">
-          <label
-            htmlFor="thumbnail"
-            className="block text-gray-700 text-sm font-bold mb-2"
-          >
-            Thumbnail
-          </label>
-          <Input
-            type="file"
-            id="thumbnail"
-            name="thumbnail"
-            accept = "thumbnail/*"
-            className="block w-full text-sm text-gray-500
-                       file:mr-4 file:py-2 file:px-4 file:rounded file:border-0
-                       file:text-sm file:font-semibold file:bg-green-50 file:text-green-700
-                       hover:file:bg-green-100"
-                       {...register("thumbnail" , {required: true})}
-          />
-        </div>
+          {/* File Inputs */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Video File */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Video File
+              </label>
+              <input
+                type="file"
+                accept="video/*"
+                className="w-full cursor-pointer rounded-lg border px-4 py-2 
+                  bg-blue-50 text-blue-700 dark:bg-blue-900 dark:text-blue-300 
+                  hover:bg-blue-100 dark:hover:bg-blue-800 transition-all duration-300  "
+                {...register("VideoFile", { required: true })}
+              />
+            </div>
 
-        {/* Submit Button */}
-        <div className="flex items-center justify-center">
-          <Button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Upload Video
-          </Button>
-        </div>
-        {loading ? <h1>Uploading Video</h1> : null}
-      </form>
+            {/* Thumbnail */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Thumbnail
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                className="w-full cursor-pointer rounded-lg border px-4 py-2 
+                  bg-green-50 text-green-700 dark:bg-green-900 dark:text-green-300 
+                  hover:bg-green-100 dark:hover:bg-green-800 transition-all duration-300"
+                {...register("thumbnail", { required: true })}
+              />
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="px-6 py-2.5 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 
+                dark:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300 shadow-lg 
+                hover:shadow-xl transform hover:scale-105 focus:ring-4 focus:ring-blue-300/50"
+            >
+              {loading ? (
+                <span className="flex items-center">
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  Uploading...
+                </span>
+              ) : (
+                "Upload Video"
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-
-  )
+);
 }
 
 export default VideoUpload

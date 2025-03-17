@@ -4,12 +4,14 @@ import Logout from './Header/LogoutBtn';
 import { useNavigate } from 'react-router-dom';
 import EditAvatar from './EditAvatar';
 import EditCoverImage from './EditCoverImage';
+import { useSelector } from 'react-redux';
 
 
 function UserInfo() {
   const [userdata, setUserdata] = useState(null);
   const [loading, setLoading] = useState(true);
   const Navigate = useNavigate()
+  const darkMode = useSelector((state) => state.theme.DarkMode);
 
   useEffect(() => {
     axios.get('api/users/current-user', { withCredentials: true })
@@ -46,56 +48,96 @@ function UserInfo() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black">
-      <div className="max-w-2xl w-full mx-auto p-6 bg-black shadow-lg rounded-2xl">
+    <div className={`min-h-screen flex items-center justify-center bg-gradient-to-br ${
+      darkMode 
+        ? 'from-gray-900 via-gray-800 to-gray-900' 
+        : 'from-gray-100 via-gray-50 to-gray-100'
+    }`}>
+      <div className={`w-full max-w-2xl mx-auto p-8 rounded-3xl shadow-2xl transform transition-all duration-500 animate-fade-in-up ${
+        darkMode ? 'bg-gray-800' : 'bg-white'
+      }`}>
         {/* Cover Image */}
-        <div className="relative h-72 w-full bg-blue-900 rounded-t-2xl overflow-hidden">
+        <div className="relative h-64 rounded-2xl overflow-hidden group">
           <img
             src={userdata.coverImage}
             alt="Cover"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
           />
-          <EditCoverImage/>
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent" />
+          <EditCoverImage 
+            className="absolute bottom-4 right-4 hover:scale-110 transition-transform duration-300"
+          />
         </div>
 
         {/* Avatar */}
-        <div className="flex justify-center -mt-16">
-        
-        <div className="relative w-32 h-32 rounded-full border-4 border-black shadow-lg bg-black overflow-hidden">
-  <img
-    src={userdata.avatar}
-    alt="User Avatar"
-    className="w-full h-full object-cover"
-  />
-   <EditAvatar/>
+        <div className="flex justify-center -mt-20">
+          <div className="relative group">
+            <img
+              src={userdata.avatar}
+              alt="User Avatar"
+              className="w-40 h-40 rounded-full border-4 shadow-xl transition-all duration-300 group-hover:scale-110 ${
+                darkMode ? 'border-gray-800' : 'border-white'
+              }"
+            />
+            <EditAvatar 
+              className="absolute bottom-2 right-2 hover:scale-125 transition-transform duration-300"
+            />
           </div>
         </div>
-       
-        {/* User Info */}
-        <div className="text-center mt-6 text-white">
-          <h2 className="text-2xl font-bold">{userdata.fullname}</h2>
-          <p className="text-gray-400 mt-2">{userdata.email}</p>
-          <p className="text-gray-300 mt-1">@{userdata.username}</p>
-        </div>
-        
-        <button  
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-         onClick={() => {HandleUpdateDetails()}}> Update account Details</button>
-        
 
-        {/* Update Password Button */}
-        <div className="flex justify-center mt-8">
+        {/* User Info */}
+        <div className="text-center mt-8 space-y-2">
+          <h2 className={`text-3xl font-bold ${
+            darkMode ? 'text-gray-100' : 'text-gray-900'
+          }`}>
+            {userdata.fullname}
+          </h2>
+          <p className={`text-lg ${
+            darkMode ? 'text-gray-400' : 'text-gray-600'
+          }`}>
+            {userdata.email}
+          </p>
+          <p className={`text-sm ${
+            darkMode ? 'text-gray-500' : 'text-gray-400'
+          }`}>
+            @{userdata.username}
+          </p>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <button
+            onClick={HandleUpdateDetails}
+            className={`py-3 px-6 rounded-xl font-semibold transition-all duration-300 transform hover:scale-[1.02] ${
+              darkMode 
+                ? 'bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-500 hover:to-blue-300' 
+                : 'bg-gradient-to-r from-blue-500 to-blue-300 hover:from-blue-400 hover:to-blue-200'
+            }`}
+          >
+            Update Details
+          </button>
+
           <button
             onClick={handleUpdatePassword}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className={`py-3 px-6 rounded-xl font-semibold transition-all duration-300 transform hover:scale-[1.02] ${
+              darkMode 
+                ? 'bg-gradient-to-r from-green-600 to-green-400 hover:from-green-500 hover:to-green-300' 
+                : 'bg-gradient-to-r from-green-500 to-green-300 hover:from-green-400 hover:to-green-200'
+            }`}
           >
             Update Password
           </button>
         </div>
 
         {/* Logout Button */}
-        <div className="flex justify-center mt-4">
-          <Logout />
+        <div className="mt-8 flex justify-center">
+          <Logout 
+            className={`py-3 px-8 rounded-xl font-semibold transition-all duration-300 transform hover:scale-[1.02] ${
+              darkMode 
+                ? 'bg-gradient-to-r from-red-600 to-red-400 hover:from-red-500 hover:to-red-300' 
+                : 'bg-gradient-to-r from-red-500 to-red-300 hover:from-red-400 hover:to-red-200'
+            }`}
+          />
         </div>
       </div>
     </div>

@@ -4,26 +4,25 @@ import axios from 'axios'
 import { logout } from '../../Store/authslice'
 import { useNavigate } from 'react-router-dom'
 
-
 function Logout() {
- const dispatch = useDispatch()
-const Navigate = useNavigate()
- const LogoutHandler = () => {
+  const dispatch = useDispatch()
+  const Navigate = useNavigate()
 
-    axios.post('/api/users/logout' , {}  , {withCredentials: true})
-    .then(() => {
+  const LogoutHandler = () => {
+    axios.post('/api/users/logout', {}, { withCredentials: true })
+      .then(() => {
         dispatch(logout())
         Navigate('/')
-          })
- }
+      })
+  }
+
   return (
     <button
-    className="inline-block px-6 py-2 bg-blue-500 text-white duration-200 hover:bg-blue-600 rounded-full"
-    onClick={LogoutHandler}
-  >
-    Logout
-  </button>
-  
+      onClick={LogoutHandler}
+      className="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-full hover:bg-purple-700 transition-colors duration-300 transform hover:scale-105"
+    >
+      Logout
+    </button>
   )
 }
 
