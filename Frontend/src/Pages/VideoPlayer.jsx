@@ -38,8 +38,7 @@ const darkMode = useSelector((state) => state.theme.DarkMode);
         setOwnerComment(response.data.data.Userr);
         setsubscribeChannel(response.data.data.channel._id)
         setChannelSubButton(response.data.data.channel.isSubscribed)
-          console.log(response)
-      } catch (error) {
+        } catch (error) {
         console.error('Error fetching video:', error);
         navigate('/');
       }

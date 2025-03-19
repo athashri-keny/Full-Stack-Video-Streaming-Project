@@ -36,7 +36,7 @@ const login = async (data ) => {
       }
     }
   } catch (error) {
-    SetError(error.response?.data?.message || error.message);
+    SetError( error.message);
   }
    // getting the current user details
  
@@ -78,11 +78,11 @@ const login = async (data ) => {
                 placeholder="Enter your email"
                 {...register('email', { required: true })}
               />
-              {error.email && (
+              {error && (
                 <p className={`text-sm mt-2 animate-pulse ${
                   darkMode ? 'text-red-400' : 'text-red-600'
                 }`}>
-                  {error.email.message}
+                  {error}
                 </p>
               )}
             </div>
