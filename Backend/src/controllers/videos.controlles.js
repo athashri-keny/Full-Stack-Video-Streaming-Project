@@ -158,8 +158,7 @@ const getVideoAndChannelProfile = asyncHandler(async (req, res) => {
  }
  )
 
-  // Fetch the channel details based on the video's owner.
-  // Assuming 'owner' is stored as an ObjectId reference to the user.
+
   const channel = await user.aggregate([
     {
       // Match using the owner's _id
@@ -192,7 +191,7 @@ const getVideoAndChannelProfile = asyncHandler(async (req, res) => {
         channelssubscribedtoCount: { $size: "$subcribedto" },
         isSubscribed: {
           $cond: {
-            if: { $in: [req.User?._id, "$subcribers.subcriber"] },
+            if: { $in: [ userID, "$subcribers.subcriber"] },
             then: true,
             else: false,
           },

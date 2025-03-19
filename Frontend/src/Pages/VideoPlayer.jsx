@@ -3,14 +3,12 @@ import React, { useState, useEffect ,  } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import CloudinaryPlayer from '../Components/Cloudinary/CloudinaryPlayer';
-import Input from '../Components/input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import Addcomment from '../Components/Comments/Addcomments';
-import AddVideoToPlaylist from '../Components/Playlist/AddVideoToPlaylist';
 import EditComments from '../Components/Comments/EditComments';
 import { useSelector , useDispatch } from 'react-redux'
-import { ClickToSub } from '../Store/Subscribe';
+
 
 
 const VideoPlayerPage = () => {
@@ -24,7 +22,6 @@ const VideoPlayerPage = () => {
   const navigate = useNavigate();
 const [channelSubButton , setChannelSubButton] = useState(false)
   const [subscribeChannel , setsubscribeChannel] = useState("")
-const Subscribe = useSelector((state) =>  state.Sub.ClicktoSub)
 const Dispatch = useDispatch()
 const darkMode = useSelector((state) => state.theme.DarkMode);
 
@@ -40,6 +37,7 @@ const darkMode = useSelector((state) => state.theme.DarkMode);
         setChannelData(response.data.data.channel);
         setOwnerComment(response.data.data.Userr);
         setsubscribeChannel(response.data.data.channel._id)
+        setChannelSubButton(response.data.data.channel.isSubscribed)
           console.log(response)
       } catch (error) {
         console.error('Error fetching video:', error);
@@ -70,11 +68,7 @@ const darkMode = useSelector((state) => state.theme.DarkMode);
     if (!channelSubButton) {
        await axios.post(`/api/subs/substochannel/c/${ChannelId}`);
        setChannelSubButton(true);
-       useEffect(() => {
-        setChannelSubButton(subscribeChannel)
-       } , [Subscribe])
-      
-    } else {
+       } else {
        await axios.post(`/api/subs/substochannel/c/${ChannelId}`);
       setChannelSubButton(false);
     }
@@ -163,7 +157,7 @@ const darkMode = useSelector((state) => state.theme.DarkMode);
             <button 
               onClick={() => { HandleSubscribe(); Dispatch(ClickToSub()); }}
               className={`text-xm px-2 py-1 rounded-md ${
-                channelSubButton 
+                channelSubButton
                   ? `${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-600 hover:bg-gray-700'}`
                   : `${darkMode ? 'bg-red-700 hover:bg-red-600' : 'bg-red-600 hover:bg-red-700'}`
               }`}

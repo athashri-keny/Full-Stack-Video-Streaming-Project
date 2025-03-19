@@ -379,6 +379,7 @@ const updateUserCoverImg = asyncHandler(async(req , res) => {
 
 const getUserChannelProfile = asyncHandler(async (req, res) => {
   const { channelId } = req.params; // channelId from URL
+  const userID = req.user._id
   if (!channelId?.trim()) {
     throw new ApiError(400, "Channel ID is missing");
   }
@@ -416,7 +417,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
         // Checks if the logged-in user (req.User?._id) is in the list of subscribers.
         isSubscribed: {
           $cond: {
-            if: { $in: [req.User?._id, "$subcribers.subcriber"] },
+            if: { $in: [userID, "$subcribers.subcriber"] },
             then: true,
             else: false
           }
