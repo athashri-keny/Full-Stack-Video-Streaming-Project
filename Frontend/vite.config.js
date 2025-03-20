@@ -5,7 +5,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://full-stack-video-streaming-project.onrender.com',
+        target: 'http://localhost:3000',
         changeOrigin: true, // Ensures the host header is updated correctly
         rewrite: (path) => path.replace(/^\/api/, '/api/v1'),
       },
