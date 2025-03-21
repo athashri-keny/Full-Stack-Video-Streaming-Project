@@ -65,7 +65,7 @@ function GetUserPlaylists() {
             }`}
           >
             <div className="mb-4">
-              <h1 className={`text-xl font-bold ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>
+              <h1 className={`text-xl font-bold ${darkMode ? 'text-gray-100' : 'text-white-900'}`}>
                 {playlist.name}
               </h1>
               <p className={`text-sm mt-1 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -86,7 +86,7 @@ function GetUserPlaylists() {
                         className="w-32 h-20 object-cover rounded-md"
                       />
                       <div className="mt-1">
-                        <h2 className="text-sm font-medium line-clamp-2">
+                        <h2 className="text-sm font-medium line-clamp-2 text-white">
                           {video.title}
                         </h2>
                       </div>

@@ -8,7 +8,7 @@ import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import Addcomment from '../Components/Comments/Addcomments';
 import EditComments from '../Components/Comments/EditComments';
 import { useSelector , useDispatch } from 'react-redux'
-
+import AddVideoToPlaylist from '../Components/Playlist/AddVideoToPlaylist';
 
 
 const VideoPlayerPage = () => {
@@ -24,6 +24,7 @@ const [channelSubButton , setChannelSubButton] = useState(false)
   const [subscribeChannel , setsubscribeChannel] = useState("")
 const Dispatch = useDispatch()
 const darkMode = useSelector((state) => state.theme.DarkMode);
+
 
 
 
@@ -153,6 +154,7 @@ const darkMode = useSelector((state) => state.theme.DarkMode);
             >
               View Channel
             </button>
+            <AddVideoToPlaylist/>
             <button 
               onClick={() => { HandleSubscribe(); Dispatch(ClickToSub()); }}
               className={`text-xm px-2 py-1 rounded-md ${

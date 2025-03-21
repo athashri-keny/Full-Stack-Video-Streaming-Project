@@ -11,7 +11,7 @@ import { Like } from "../models/like.model.js";
 
 const getallVidoes = asyncHandler(async (req, res) => {
   // Get page and limit from query parameters with default values
-  const { page = 1, limit = 10 } = req.query;
+  const { page = 1, limit = 20 } = req.query;
   const pageNum = parseInt(page);
   const limitNum = parseInt(limit);
 

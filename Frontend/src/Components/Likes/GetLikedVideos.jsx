@@ -14,11 +14,7 @@ function LikesVideos() {
     const GetLikedVideos = async () => {
       try {
         const response = await axios.get('/api/likes/GetLikedVideos')
-        // response.data.data.LikedVideos is an array where each item has its own LikedVideos array
-        const fetchedLikedVideos = response.data.data.LikedVideos
-        // Flatten the nested arrays to get a single array of video objects
-        const flattenedVideos = fetchedLikedVideos.flatMap(item => item.LikedVideos)
-        setLikedVideos(flattenedVideos)
+        setLikedVideos(response.data.data.LikedVideos[0].LikedVideos)
         console.log(response)
       } catch (error) {
         console.error("Error fetching liked videos", error)
@@ -37,7 +33,7 @@ function LikesVideos() {
             Liked Videos
             <FontAwesomeIcon icon= {faThumbsUp}  className='pl-2.5'/>
           </h1>
-          {LikesVideos.length === 0 ? (
+          {likedVideos.length === 0 ? (
             <p className={`text-center ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               No Liked Videos
             </p>

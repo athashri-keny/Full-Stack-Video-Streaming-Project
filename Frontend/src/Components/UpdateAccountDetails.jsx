@@ -23,7 +23,6 @@ const UpdateDetails = async () => {
         headers: {"Content-Type" : "application/json"}
     }) 
     setSuccessMessage("Details updated successfully!");
-    console.log(response)
 }
 
   return (

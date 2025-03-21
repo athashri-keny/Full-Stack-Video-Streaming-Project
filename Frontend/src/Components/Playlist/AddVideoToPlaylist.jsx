@@ -19,7 +19,7 @@ function AddVideoToPlaylist() {
   // Updated addVideo accepts a playlistId parameter
   const addVideo = async (playlistId) => {
     try {
-      const response = await axios.post(
+      await axios.post(
         `/api/playlist/AddVideoToPlaylist/c/${VideoId}`,
         { PlaylistId: playlistId },
         { headers: { "Content-Type": "application/json" } }
@@ -28,6 +28,7 @@ function AddVideoToPlaylist() {
       Navigate(0)
     } catch (error) {
       console.error("Failed to add Video to Playlist", error)
+     
     }
   }
  
@@ -53,7 +54,6 @@ function AddVideoToPlaylist() {
       })
       console.log("Video Removed Sucessfully")
       Navigate(0)
-
     } catch (error) {
       console.error("error while deleting video From playlist")
     }
@@ -70,44 +70,67 @@ function AddVideoToPlaylist() {
  
 
   return (
-    <div>
+    <div className="relative">
       {checkVideoInPlaylist() ? (
-        <div>
-        <button className='px-4 py-2 bg-red-400 text-white rounded hover:bg-red-700 transition' onClick={() => {DelVideoPlaylist(PlaylistId)}} > Remove Video From Playlist </button>
-        </div>
+        <button 
+          onClick={DelVideoPlaylist}
+         className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all 
+                    duration-300 transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg
+                    disabled:opacity-50 disabled:cursor-not-allowed"
+        > Remove From Playlist
+          </button>
       ) : (
         <button
           onClick={() => {
             setShowPlaylistModal(true)
             UserPlaylist()
           }}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+         className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg 
+                    hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform 
+                    hover:scale-105 active:scale-95 shadow-md hover:shadow-lg disabled:opacity-50 
+                    disabled:cursor-not-allowed"
         >
-          Add this Video to a Playlist
+          Add to Playlist
         </button>
       )}
 
       {showPlaylistModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 transition-opacity duration-300">
-          <div className="bg-white rounded-lg p-6 w-80 shadow-lg transform transition duration-300 ease-in-out animate__animated animate__fadeInDown">
-            <h3 className="text-xl font-semibold mb-4">Select Playlist</h3>
-            <div>
+        <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-sm z-50 
+                      animate-fade-in">
+          <div className="bg-white rounded-xl p-6 w-96 max-w-[90%] shadow-2xl transform transition-all 
+                          animate-slide-up">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-2xl font-bold text-gray-800">Select Playlist</h3>
+              <button
+                onClick={() => setShowPlaylistModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+              >
+                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <div className="space-y-2 max-h-64 overflow-y-auto">
               {playlists.map((playlist) => (
                 <div
                   key={playlist._id}
                   onClick={() => addVideo(playlist._id)}
-                  className="cursor-pointer hover:bg-gray-100 p-2 rounded"
+                  className="group flex items-center p-3 rounded-lg cursor-pointer transition-all
+                            duration-200 hover:bg-blue-50 hover:pl-5 active:scale-[0.98]"
                 >
-                  {playlist.name}
+                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 
+                                 transition-opacity duration-300"/>
+                  <span className="text-gray-700 group-hover:text-blue-600 font-medium">{playlist.name}</span>
                 </div>
               ))}
             </div>
-            <button
-              onClick={() => setShowPlaylistModal(false)}
-              className="mt-4 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition"
-            >
-              Close
-            </button>
+
+            {playlists.length === 0 && (
+              <div className="text-center py-4 text-gray-500">
+                No playlists found. Create one first!
+              </div>
+            )}
           </div>
         </div>
       )}
