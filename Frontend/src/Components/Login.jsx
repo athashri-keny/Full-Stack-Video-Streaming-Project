@@ -28,10 +28,10 @@ const login = async (data ) => {
   try {
     const response = await axios.post('/api/users/login', data ,  {withCredentials: true}) ;
 
-    if (response.data) {
-      dispatch(LoginAction(response.data.data?.user));
+    if (response.data) { 
+        dispatch(LoginAction(response.data.data));
       if (response.data) {
-        console.log('login in sucessfull' , response.data.data?.user)
+        console.log('login in sucessfull' , response)
         Navigate('/')
       }
     }

@@ -17,9 +17,9 @@ function ManageVideos() {
   useEffect(() => {
     const fetchVideos = async () => {
         try {
-            const response = await axios.get('/api/videos') // get all videos 
-                   setVideos(response.data.videos)
-        } catch (error) {
+            const response = await axios.get('/api/videos/VideoUploadByOwner') // get all videos 
+              setVideos(response.data.data.videos)
+           } catch (error) {
             console.log(error , "error while fetching the video")
         }
     }
@@ -36,7 +36,7 @@ return  <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}
   
   {videos.length === 0 ? (
     <p className={`text-center py-8 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-      No Videos Found
+     You haven’t uploaded any videos yet. Start sharing your content today!
     </p>
   ) : (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

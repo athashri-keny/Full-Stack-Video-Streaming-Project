@@ -8,6 +8,8 @@ const initialState = {
   // userData: null
 };
 
+
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -15,15 +17,21 @@ const authSlice = createSlice({
     login: (state, action) => {
       state.status = true;
       state.userData = action.payload;  // Stores the whole payload (user info) which come from login 
-      localStorage.setItem('accessToken' , action.payload.accessToken)
+      localStorage.setItem('accessToken' , action.payload.accesstoken)
       localStorage.setItem('refreshToken' , action.payload.refreshToken)
+      console.log('Payload:', action.payload);
+ 
      },
-    logout: (state) => {
+    logout: (state , action) => {
       state.status = false
-      state.userData = null
+      state.userData = null;
+      localStorage.removeItem('accessToken' )
+      localStorage.removeItem("refreshToken")
     }
   }
 });
+
+
 
 export const { login, logout } = authSlice.actions;
 export default authSlice.reducer;

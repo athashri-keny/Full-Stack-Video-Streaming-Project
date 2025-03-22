@@ -1,19 +1,23 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
-import { logout } from '../../Store/authslice'
+import { logout as LogoutAction } from '../../Store/authslice'
 import { useNavigate } from 'react-router-dom'
 
 function Logout() {
   const dispatch = useDispatch()
   const Navigate = useNavigate()
 
-  const LogoutHandler = () => {
-    axios.post('/api/users/logout', {}, { withCredentials: true })
-      .then(() => {
-        dispatch(logout())
-        Navigate('/')
-      })
+  const LogoutHandler =  async () => {
+    try {
+      const response = await axios.post('/api/users/logout' , {withCredentials: true})
+      if (response) {
+        dispatch(LogoutAction())
+        console.log( "logout Successfully")
+      }
+    } catch (error) {
+      console.error("error while loggin out")
+    }
   }
 
   return (

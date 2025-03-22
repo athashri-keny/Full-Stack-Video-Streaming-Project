@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { publishVideo , getallVidoes , getVideoAndChannelProfile , UpdateVideodetails, DeleteVideo , TogglePublishStatus } from "../controllers/videos.controlles.js";
+import { publishVideo , getallVidoes , getVideoAndChannelProfile , UpdateVideodetails, DeleteVideo , TogglePublishStatus, VideoUploadedByOwner } from "../controllers/videos.controlles.js";
 import { upload } from "../middlewares/multer.js";
 import { verifyjwt } from "../middlewares/auth.middleware.js";
 
@@ -22,5 +22,6 @@ router.route("/c/:VideoId/c/:ChannelId").get( verifyjwt , getVideoAndChannelProf
 router.route("/update/c/:VideoId").patch(UpdateVideodetails);
 router.route("/delete/c/:VideoId").delete(DeleteVideo);
 router.route("/Publishstatus/c/:VideoId").get(TogglePublishStatus)
+router.route("/VideoUploadByOwner").get( verifyjwt , VideoUploadedByOwner)
 
 export default router;

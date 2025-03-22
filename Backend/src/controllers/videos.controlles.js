@@ -5,8 +5,8 @@ import { user } from "../models/user.model.js";
 import { Video } from "../models/video.model.js";
 import { uploadoncloud } from "../utils/file.upload.js";
 import { Comment } from "../models/commet.model.js";
-import mongoose from "mongoose";
-import { Like } from "../models/like.model.js";
+import mongoose, { Mongoose } from "mongoose";
+
 
 
 const getallVidoes = asyncHandler(async (req, res) => {
@@ -353,11 +353,32 @@ const TogglePublishStatus = asyncHandler(async(req , res) => {
 
 })
 
+const VideoUploadedByOwner = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+
+  const foundUser = await user.findById(userId)
+  .select("createdAt updatedAt ")
+  if (!foundUser) {
+    throw new ApiError(404, "User not found");
+  }
+
+
+  const videos = await Video.find({ owner: userId })
+  .select("title thumbnail views createdAt isPublished description owner ");
+
+
+  return res.status(200).json(
+    new ApiResponse(200, { videos, user: foundUser }, "Videos uploaded by owner fetched successfully")
+  );
+});
+
+
 export {
     getallVidoes,
     publishVideo,
     getVideoAndChannelProfile,
     UpdateVideodetails,
     DeleteVideo,
-    TogglePublishStatus
+    TogglePublishStatus,
+    VideoUploadedByOwner
 }

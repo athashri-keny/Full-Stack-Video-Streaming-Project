@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash  } from '@fortawesome/free-solid-svg-icons'
 import  {faEye} from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux';
-
+import { useNavigate } from 'react-router-dom';
 
 function EditProfile() {
 const [oldPassword , SetOldPassword] = useState('')
@@ -15,6 +15,7 @@ const [showPassword  , setShowPassword] = useState(false)
 const [ShowNewPassword  , setShowNewPassword] = useState(false)
 const [message , setMessage] = useState('')
 const darkMode = useSelector((state) => state.theme.DarkMode);
+const Navigate = useNavigate()
 
 const UpdatePass = async (e) => {
   e.preventDefault();
@@ -33,12 +34,15 @@ const UpdatePass = async (e) => {
       }
     );
 
-    console.log('Response:', response.data);
-    setMessage("Password Updated Successfully");
-    
+       
+    setTimeout(() => {
+      Navigate('/userinfo')
+        }, 2000);
+
     // Clear form fields
     SetOldPassword('');
     SetNewPassword('');
+    setMessage("Password Updated Successfully");
   } catch (error) {
     console.error('Error:', error);
     setMessage(error.response?.data?.message || "An error occurred");

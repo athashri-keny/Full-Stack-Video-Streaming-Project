@@ -13,17 +13,16 @@ function LikesVideos() {
   useEffect(() => {
     const GetLikedVideos = async () => {
       try {
-        const response = await axios.get('/api/likes/GetLikedVideos')
-        setLikedVideos(response.data.data.LikedVideos[0].LikedVideos)
-        console.log(response)
+        const response = await axios.get('/api/likes/GetLikedVideos');
+        // Aggregate all LikedVideos from each entry
+        const allVideos = response.data.data.LikedVideos.flatMap(user => user.LikedVideos);
+        setLikedVideos(allVideos);
       } catch (error) {
-        console.error("Error fetching liked videos", error)
+        console.error("Error fetching liked videos", error);
       }
-    }
-
-    GetLikedVideos()
-  }, [])
-
+    };
+    GetLikedVideos();
+  }, []);
   return (
     (
       <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>

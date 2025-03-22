@@ -29,14 +29,11 @@ function UserInfo() {
     // Add your logic for updating the password here
        Navigate('/EditProfile')
        console.log("Button was clicked")
-       Navigate(0)
-    // You can redirect to a password update page or show a modal
+        // You can redirect to a password update page or show a modal
   };
 
   const HandleUpdateDetails = () => {
     Navigate("/EditNAME")
-    console.log("button was clicked")
-    Navigate(0)
   }
    
   if (loading) {
