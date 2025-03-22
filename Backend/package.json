@@ -15,8 +15,7 @@
   "author": "athashri keny",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.1.7",
-    "build": "npm i "
+    "nodemon": "^3.1.7"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
