@@ -9,12 +9,13 @@ import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons'
 function VideoHistory() {
 const [videos , setVideos] = useState([])
 const darkMode = useSelector((state) => state.theme.DarkMode)
+const API_BASE  = import.meta.env.VITE_API_URL;
 
 
 useEffect(() => {
 try {
     const FetchHistory =  async () => {
-     const response =  await axios.get("/api/users/history")
+     const response =  await axios.get(`${API_BASE}/api/users/history`)
      console.log(response , "Watch History Fetch Successfully")
      setVideos(response.data.data)
     }

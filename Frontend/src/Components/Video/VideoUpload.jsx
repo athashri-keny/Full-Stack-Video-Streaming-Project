@@ -13,6 +13,7 @@ const {register , handleSubmit} = useForm()
 const [loading , setLoading] = useState(false)
 const Navigate = useNavigate()
 const darkMode = useSelector((state) => state.theme.DarkMode)
+const API_BASE  = import.meta.env.VITE_API_URL;
 
 
 const upload = async (data) => {
@@ -37,7 +38,7 @@ if (!FormData) {
     console.log("formdata is missing")
 }
 
-const response = await axios.post('/api/videos/upload' , formdata, {
+const response = await axios.post(`${API_BASE}/api/videos/upload` , formdata, {
     headers: {"Content-Type": "multipart/form-data"}
 })
 

@@ -13,10 +13,12 @@ function Header() {
   const darkMode = useSelector((state) => state.theme.DarkMode);
   const [Avatar, setAvatar] = useState('');
   const dispatch = useDispatch();
+  const API_BASE  = import.meta.env.VITE_API_URL;
+
 
   useEffect(() => {
     axios
-      .get('api/users/current-user', { withCredentials: true })
+      .get(`${API_BASE}api/users/current-user`, { withCredentials: true })
       .then((response) => {
         if (response.data) {
           setAvatar(response.data.data.avatar);

@@ -12,12 +12,14 @@ function EditComments({ comment }) {
   const navigate = useNavigate();
   const [commentModal, setCommentModal] = useState(false);
   const [activeComEdit, setActiveComEdit] = useState(null);
+  const API_BASE  = import.meta.env.VITE_API_URL;
+
 
   
   const EditComm = async () => {
     try {
       await axios.patch(
-        `/api/comments/update/c/${VideoId}`,
+        `${API_BASE}/api/comments/update/c/${VideoId}`,
         {
           UpdatedComment: editedComment,
           CommentId: comment._id,
@@ -32,7 +34,7 @@ function EditComments({ comment }) {
 
   const DeleteComment = async () => {
     try {
-      await axios.delete(`/api/comments/delete/c/${VideoId}`, {
+      await axios.delete(`${API_BASE}/api/comments/delete/c/${VideoId}`, {
         data: { CommentId: comment._id },
         headers: { "Content-Type": "application/json" }
       });

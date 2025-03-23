@@ -11,12 +11,13 @@ function GetUserPlaylists() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
  const { register, handleSubmit, reset } = useForm();
  const darkMode = useSelector((state) => state.theme.DarkMode)
+ const API_BASE  = import.meta.env.VITE_API_URL;
+
 
  
   const fetchUserPlaylists = async () => {
     try {
-      const response = await axios.get('/api/playlist/UserPlaylist');
-      console.log(response, 'User Playlist Fetched Successfully');
+      const response = await axios.get(`${API_BASE}/api/playlist/UserPlaylist`);
       setPlaylists(response.data.data);
     } catch (error) {
       console.error('Error while fetching user playlists', error);
@@ -31,11 +32,10 @@ function GetUserPlaylists() {
   const onCreatePlaylist = async (data) => {
     try {
       const response = await axios.post(
-        '/api/playlist/CreatePlaylist',
+        `${API_BASE}/api/playlist/CreatePlaylist`,
         data,
         { headers: { 'Content-Type': 'application/json' } }
       );
-      console.log('Playlist Created Successfully', response);
       fetchUserPlaylists()
       setIsCreateModalOpen(false)
       reset(); 

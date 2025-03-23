@@ -9,6 +9,8 @@ function AddVideoToPlaylist() {
   const { VideoId } = useParams() // Ensure your route is providing this parameter
   const [playlists, setPlaylists] = useState([])
   const [PlaylistId , setPlaylistID] = useState("")
+  const API_BASE  = import.meta.env.VITE_API_URL;
+
 
 
 
@@ -20,7 +22,7 @@ function AddVideoToPlaylist() {
   const addVideo = async (playlistId) => {
     try {
       await axios.post(
-        `/api/playlist/AddVideoToPlaylist/c/${VideoId}`,
+        `${API_BASE}/api/playlist/AddVideoToPlaylist/c/${VideoId}`,
         { PlaylistId: playlistId },
         { headers: { "Content-Type": "application/json" } }
       )
@@ -35,8 +37,7 @@ function AddVideoToPlaylist() {
 
   const UserPlaylist = async () => {
     try {
-      const response = await axios.get('/api/playlist/UserPlaylist')
-      console.log( 'User Playlist Fetched Successfully')
+      const response = await axios.get(`${API_BASE}/api/playlist/UserPlaylist`)
       setPlaylists(response.data.data)
       setPlaylistID(response.data.data[0]._id)
 
@@ -48,7 +49,7 @@ function AddVideoToPlaylist() {
 
   const DelVideoPlaylist = async () => {
     try {
-      await axios.delete(`/api/playlist/remove/c/${VideoId}`, {
+      await axios.delete(`${API_BASE}/api/playlist/remove/c/${VideoId}`, {
         data: { PlaylistId: PlaylistId },
         headers: { "Content-Type": "application/json" }
       })

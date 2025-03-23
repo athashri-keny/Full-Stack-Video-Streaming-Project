@@ -9,11 +9,13 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 function LikesVideos() {
   const [likedVideos, setLikedVideos] = useState([])
   const darkMode = useSelector((state) => state.theme.DarkMode)
+  const API_BASE  = import.meta.env.VITE_API_URL;
+
 
   useEffect(() => {
     const GetLikedVideos = async () => {
       try {
-        const response = await axios.get('/api/likes/GetLikedVideos');
+        const response = await axios.get(`${API_BASE}/api/likes/GetLikedVideos`);
         // Aggregate all LikedVideos from each entry
         const allVideos = response.data.data.LikedVideos.flatMap(user => user.LikedVideos);
         setLikedVideos(allVideos);

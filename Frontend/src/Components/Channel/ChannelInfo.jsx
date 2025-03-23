@@ -8,11 +8,13 @@ const {ChannelId} = useParams()
 const [channelInfo , setChannelInfo] = useState("")
 const [channelSubButton , setChannelSubButton] = useState(false)
 const darkMode = useSelector((state) => state.theme.DarkMode)
+const API_BASE  = import.meta.env.VITE_API_URL;
+
 
 useEffect(() => {
   const fetchChannelInfo = async () => {
     try {
-        const response = await axios.get(`/api/users/c/${ChannelId}`)
+        const response = await axios.get(`${API_BASE}/api/users/c/${ChannelId}`)
         console.log(response , "Channel fetched sucessfully")
         setChannelInfo(  response.data.data)
         setChannelSubButton(response.data.data.isSubscribed)
@@ -26,10 +28,10 @@ useEffect(() => {
 const HandleSubscribe = async () => {
   try {
        if (!channelSubButton) {
-         await axios.post(`/api/subs/substochannel/c/${ChannelId}`);
+         await axios.post(`${API_BASE}/api/subs/substochannel/c/${ChannelId}`);
          setChannelSubButton(true);
            } else {
-         await axios.post(`/api/subs/substochannel/c/${ChannelId}`);
+         await axios.post(`${API_BASE}/api/subs/substochannel/c/${ChannelId}`);
         setChannelSubButton(false);
       }
   } catch (error) {

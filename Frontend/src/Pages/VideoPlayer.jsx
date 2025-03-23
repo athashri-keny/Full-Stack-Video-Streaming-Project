@@ -24,6 +24,8 @@ const [channelSubButton , setChannelSubButton] = useState(false)
   const [subscribeChannel , setsubscribeChannel] = useState("")
 const Dispatch = useDispatch()
 const darkMode = useSelector((state) => state.theme.DarkMode);
+const API_BASE  = import.meta.env.VITE_API_URL;
+
 
 
 
@@ -31,7 +33,7 @@ const darkMode = useSelector((state) => state.theme.DarkMode);
   useEffect(() => { 
     const fetchVideoData = async () => {
       try {
-        const response = await axios.get(`/api/videos/c/${VideoId}/c/${ChannelId}`);
+        const response = await axios.get(`${API_BASE}/api/videos/c/${VideoId}/c/${ChannelId}`);
         setVideo(response.data.data.video);
         setPublicId(response.data.data.video.VideoCloudinaryPublicId);
         setComments(response.data.data.Comments);
@@ -50,7 +52,7 @@ const darkMode = useSelector((state) => state.theme.DarkMode);
   // Like function
   const fetchLike = async () => {
     try {
-      await axios.get(`/api/likes/c/${VideoId}`);
+      await axios.get(`${API_BASE}/api/likes/c/${VideoId}`);
       console.log("Video Liked Successfully");
       setNotification("Video Liked Successfully!");
       setTimeout(() => {
@@ -66,10 +68,10 @@ const darkMode = useSelector((state) => state.theme.DarkMode);
  const HandleSubscribe =  async () => {
   try {
     if (!channelSubButton) {
-       await axios.post(`/api/subs/substochannel/c/${ChannelId}`);
+       await axios.post(`${API_BASE}/api/subs/substochannel/c/${ChannelId}`);
        setChannelSubButton(true);
        } else {
-       await axios.post(`/api/subs/substochannel/c/${ChannelId}`);
+       await axios.post(`${API_BASE}/api/subs/substochannel/c/${ChannelId}`);
       setChannelSubButton(false);
     }
   } catch (error) {

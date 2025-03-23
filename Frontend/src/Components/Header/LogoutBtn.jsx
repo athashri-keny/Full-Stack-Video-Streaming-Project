@@ -6,11 +6,12 @@ import { useNavigate } from 'react-router-dom'
 
 function Logout() {
   const dispatch = useDispatch()
-  const Navigate = useNavigate()
+  const API_BASE  = import.meta.env.VITE_API_URL;
+
 
   const LogoutHandler =  async () => {
     try {
-      const response = await axios.post('/api/users/logout' , {withCredentials: true})
+      const response = await axios.post(`${API_BASE}/api/users/logout` , {withCredentials: true})
       if (response) {
         dispatch(LogoutAction())
         console.log( "logout Successfully")

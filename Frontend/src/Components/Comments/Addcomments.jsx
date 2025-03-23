@@ -10,6 +10,7 @@ function Addcomment() {
       const [message , setMessage] = useState("")
      const darkMode = useSelector((state) => state.theme.DarkMode)
      const Navigate = useNavigate(0)
+     const API_BASE  = import.meta.env.VITE_API_URL;
 
       
      const handleComSubmit = async (e) => {
@@ -17,9 +18,8 @@ function Addcomment() {
      }
 
     const AddComment = async () => {
-        console.log("VideoId:", VideoId);
-        try {
-          await axios.post(`/api/comments/Add/c/${VideoId} ` ,   
+       try {
+          await axios.post(`${API_BASE}/api/comments/Add/c/${VideoId} ` ,   
              {Content: CommentContent}
             , {
               headers: {
