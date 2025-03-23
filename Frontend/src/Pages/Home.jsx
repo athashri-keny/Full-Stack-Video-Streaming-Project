@@ -9,11 +9,14 @@ import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 function Home() {
   const [videos, setVideos] = useState([])
   const darkMode = useSelector((state) => state.theme.DarkMode)
+  const API_BASE  = import.meta.env.VITE_API_URL;
+
+
 
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get('/api/videos')
+        const response = await axios.get(`${API_BASE}/api/videos`)
         console.log(response)
         setVideos(response.data.videos)
       } catch (error) {
