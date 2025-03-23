@@ -13,6 +13,7 @@ function EditCoverImage() {
    const Navigate = useNavigate() 
    const darkMode = useSelector((state) => state.theme.darkMode);
    const [coverImageUpdated, setCoverImageUpdated] = useState(false);
+   const API_BASE  = import.meta.env.VITE_API_URL;
    
     const UpdateCoverImage = async() => {
    seterror('')
@@ -23,7 +24,7 @@ function EditCoverImage() {
     const formdata = new FormData()
     formdata.append('coverImage' , File)
 
-   axios.patch('api/users/cover-image' , formdata , {
+   axios.patch(`${API_BASE}api/users/cover-image` , formdata , {
     headers: {"Content-Type": "multipart/form-data"}
    })
 

@@ -11,6 +11,8 @@ function UpdateAccountDetails() {
   const darkMode = useSelector((state) => state.theme.DarkMode);
   const [successMessage, setSuccessMessage] = useState('');
   const Navigate = useNavigate();
+  const API_BASE  = import.meta.env.VITE_API_URL;
+
 
   const UpdateDetails = async (e) => {
     e.preventDefault();
@@ -20,7 +22,7 @@ function UpdateAccountDetails() {
       fullname: fullname,
     };
     try {
-      await axios.patch('/api/users/update-account', data, {
+      await axios.patch(`${API_BASE}/api/users/update-account`, data, {
         headers: { 'Content-Type': 'application/json' },
       });
       setSuccessMessage('Details updated successfully!');

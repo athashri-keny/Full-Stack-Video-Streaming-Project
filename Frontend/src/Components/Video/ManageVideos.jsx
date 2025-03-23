@@ -11,13 +11,14 @@ function ManageVideos() {
   const [videos , setVideos] = useState([])
   
   const darkMode = useSelector((state) => state.theme.DarkMode);
+  const API_BASE  = import.meta.env.VITE_API_URL;
 
 
    
   useEffect(() => {
     const fetchVideos = async () => {
         try {
-            const response = await axios.get('/api/videos/VideoUploadByOwner') // get all videos 
+            const response = await axios.get(`${API_BASE}/api/videos/VideoUploadByOwner`) // get all videos 
               setVideos(response.data.data.videos)
            } catch (error) {
             console.log(error , "error while fetching the video")

@@ -16,12 +16,13 @@ function EditTitleDes() {
    const [DeleteMessage , SetDeleteMessage] = useState("")
    const Navigate = useNavigate()
     const darkMode = useSelector((state) => state.theme.DarkMode);
+    const API_BASE  = import.meta.env.VITE_API_URL;
 
 
     const handleUpdate = async () => {
     try {
       const response = await axios.patch(
-        `/api/videos/update/c/${VideoId}`,
+        `${API_BASE}/api/videos/update/c/${VideoId}`,
         {
            title : title, 
            description: description
@@ -42,7 +43,7 @@ function EditTitleDes() {
 
   const HandleDelete = async () => {
     try {
-      await axios.delete(`/api/videos/delete/c/${VideoId}`)
+      await axios.delete(`${API_BASE}/api/videos/delete/c/${VideoId}`)
       console.log("Video Deleted Sucessfully")
       SetDeleteMessage("Video Deleted Sucessfully!")
       Navigate('/')

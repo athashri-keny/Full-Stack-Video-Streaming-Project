@@ -1,6 +1,5 @@
-import React , {useState , useEffect}  from 'react'
+import React , {useState }  from 'react'
 import axios from 'axios'
-import Button from './Button'
 import Input from './input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash  } from '@fortawesome/free-solid-svg-icons'
@@ -16,19 +15,21 @@ const [ShowNewPassword  , setShowNewPassword] = useState(false)
 const [message , setMessage] = useState('')
 const darkMode = useSelector((state) => state.theme.DarkMode);
 const Navigate = useNavigate()
+const API_BASE  = import.meta.env.VITE_API_URL;
+
 
 const UpdatePass = async (e) => {
   e.preventDefault();
   try {
     // Send data as JSON
-    const response = await axios.post('api/users/change-password',
+      await axios.post(`${API_BASE}api/users/change-password`,
       {
         oldPassword: oldPassword,
-        newPassword: Newpassword // Ensure variable name matches state
+        newPassword: Newpassword 
       }, 
       {
         headers: {
-          'Content-Type': 'application/json' // Set correct content type
+          'Content-Type': 'application/json' 
         },
         withCredentials: true
       }
@@ -70,7 +71,6 @@ return  (
       </h2>
       
       <form onSubmit={UpdatePass} className="space-y-6">
-        {/* Old Password Field */}
         <div className="animate-slide-in-left">
           <label className={`block text-sm font-medium mb-2 transition-all duration-300 ${
             darkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'
@@ -103,8 +103,7 @@ return  (
           </div>
         </div>
 
-        {/* New Password Field */}
-        <div className="animate-slide-in-right">
+           <div className="animate-slide-in-right">
           <label className={`block text-sm font-medium mb-2 transition-all duration-300 ${
             darkMode ? 'text-gray-300 hover:text-green-400' : 'text-gray-600 hover:text-green-600'
           }`}>

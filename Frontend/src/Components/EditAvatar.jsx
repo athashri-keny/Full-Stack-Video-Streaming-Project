@@ -13,6 +13,7 @@ const [avatarUpdated , setavatarUpdated] = useState(false)
 const Navigate = useNavigate()
 const FileInputRef = useRef(null)
 const darkMode = useSelector((state) => state.theme.darkMode);
+const API_BASE  = import.meta.env.VITE_API_URL;
 
 const updateAvatar = async () => {
   // Clear any previous errors
@@ -34,7 +35,7 @@ const updateAvatar = async () => {
   formdata.append('avatar', File);
   
   try {
-    const response = await axios.patch("/api/users/avatar", formdata, {
+    const response = await axios.patch(`${API_BASE}/api/users/avatar`, formdata, {
       headers: { "Content-Type": "multipart/form-data" }
     });
 

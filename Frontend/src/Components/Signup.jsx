@@ -17,6 +17,7 @@ const [showPassword , setShowPassword] = useState(false)
   const darkMode = useSelector((state) => state.theme.DarkMode);
   const [message , setmessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const API_BASE  = import.meta.env.VITE_API_URL;
 
 const Create = async (data) => {
   seterror("");
@@ -50,7 +51,7 @@ const Create = async (data) => {
       console.log(data.coverImage[0])
     }
 
-    const response = await axios.post("/api/users/register", formdata, {
+    const response = await axios.post(`${API_BASE}/api/users/register`, formdata, {
       headers: { "Content-Type": "multipart/form-data" },
     });
 
