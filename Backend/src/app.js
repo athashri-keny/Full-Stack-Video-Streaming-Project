@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true , limit: "16kb"}));
  //app.use(express.static("public"))
 app.use(cookieParser())
-
+app.use(express.static(path.join(__dirname, 'public')));
 
 import userRouter from './routes/user.routes.js'; 
 import tweetRouter from "./routes/tweets.routes.js"
