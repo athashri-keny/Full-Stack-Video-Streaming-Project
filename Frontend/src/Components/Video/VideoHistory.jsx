@@ -20,7 +20,7 @@ useEffect(() => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           },
-          withCredentials: true // Only if using cookies
+          withCredentials: true 
         }
       );
       console.log(response, "Watch History Fetched Successfully");

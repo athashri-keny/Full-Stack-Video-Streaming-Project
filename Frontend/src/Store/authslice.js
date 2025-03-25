@@ -8,8 +8,6 @@ const initialState = {
   // userData: null
 };
 
-
-
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -25,6 +23,8 @@ const authSlice = createSlice({
     logout: (state , action) => {
       state.status = false
       state.userData = null;
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
      }
   }
 });

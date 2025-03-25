@@ -16,7 +16,7 @@ function Logout() {
       // Send logout request with proper headers
       const response = await axios.post(
         `${API_BASE}/api/v1/users/logout`,
-        {}, // no payload needed
+        {}, 
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -26,14 +26,10 @@ function Logout() {
 
       console.log(response);
       if (response) {
-        // Dispatch logout action to update your Redux store
-        dispatch(logoutAction());
-        // Remove tokens from local storage after a successful logout
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+             dispatch(logoutAction());
+      
         console.log("Logged out successfully");
-        // Navigate to home page
-        navigate('/');
+          navigate('/');
       }
     } catch (error) {
       console.error("Logout error:", error);
