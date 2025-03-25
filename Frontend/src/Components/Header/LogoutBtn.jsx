@@ -12,16 +12,15 @@ function Logout() {
     try {
       const response = await axios.post(
         `${API_BASE}/api/v1/users/logout`,
-        {}, // Empty request body
         {
           withCredentials: true,
-          // Remove Authorization header if using cookies
         }
       );
-      
+      console.log(response)
       if (response) {
-        dispatch(Logout()); // Make sure action name matches
+        dispatch(LogoutAction()); 
         console.log("Logged out successfully");
+        useNavigate('/')
       }
     } catch (error) {
       console.error("Logout error:", error);
