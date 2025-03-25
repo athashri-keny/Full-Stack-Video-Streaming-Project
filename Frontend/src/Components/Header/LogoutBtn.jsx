@@ -8,24 +8,25 @@ function Logout() {
   const dispatch = useDispatch()
   const API_BASE  = import.meta.env.VITE_API_URL;
 
-
-  const LogoutHandler =  async () => {
+  const LogoutHandler = async () => {
     try {
-      const response = await axios.post(`${API_BASE}/api/v1/users/logout` , 
+      const response = await axios.post(
+        `${API_BASE}/api/v1/users/logout`,
+        {}, // Empty request body
         {
-         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          withCredentials: true,
+          // Remove Authorization header if using cookies
         }
-      },
-        {withCredentials: true})
+      );
+      
       if (response) {
-        dispatch(LogoutAction())
-        console.log( "logout Successfully")
+        dispatch(Logout()); // Make sure action name matches
+        console.log("Logged out successfully");
       }
     } catch (error) {
-      console.error("error while loggin out")
+      console.error("Logout error:", error);
     }
-  }
+  };
 
   return (
     <button
