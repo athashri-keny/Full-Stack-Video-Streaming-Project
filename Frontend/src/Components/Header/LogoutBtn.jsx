@@ -13,8 +13,12 @@ function Logout() {
       const response = await axios.post(
         `${API_BASE}/api/v1/users/logout`,
         {
-          withCredentials: true,
-        }
+          headers: {
+           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+           Authorization: `Bearer ${localStorage.removeItem('accessToken')}`,
+           Authorization: `Bearer ${localStorage.removeItem('refreshToken')}`,
+         }
+       },
       );
       console.log(response)
       if (response) {
