@@ -41,8 +41,7 @@ if (!FormData) {
 const response = await axios.post(`${API_BASE}/api/v1/videos/upload` , formdata, {
   headers: {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-    'Content-Type': 'application/json'
-  },
+   },
   withCredentials: true
 })
 
