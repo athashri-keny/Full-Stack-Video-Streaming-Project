@@ -24,7 +24,13 @@ function EditComments({ comment }) {
           UpdatedComment: editedComment,
           CommentId: comment._id,
         },
-        { headers: { "Content-Type": "application/json" } }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        }
       );
       navigate(0);
     } catch (error) {
@@ -32,18 +38,23 @@ function EditComments({ comment }) {
     }
   };
 
+  
   const DeleteComment = async () => {
     try {
       await axios.delete(`${API_BASE}/api/v1/comments/delete/c/${VideoId}`, {
         data: { CommentId: comment._id },
-        headers: { "Content-Type": "application/json" }
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
       });
       navigate(0);
     } catch (error) {
       console.error("Error deleting comment:", error);
     }
   };
-
+  
   const toggleManageComment = (index) => {
     setActiveComEdit(activeComEdit === index ? null : index);
   };

@@ -17,26 +17,28 @@ function Addcomment() {
       SetCommentContent(e.target.value)
      }
 
-    const AddComment = async () => {
-       try {
-          await axios.post(`${API_BASE}/api/v1/comments/Add/c/${VideoId} ` ,   
-             {Content: CommentContent}
-            , {
-              headers: {
-                'Content-Type': 'application/json',
-               
-              }
-            }
-          );
-          setMessage("Commentted added sucessfully on this video!")
-          setTimeout(() => {
-           Navigate(0)
-          }, 1000);
-         
-        } catch (error) {
-          console.error("Error in AddComment:", error);
-        }
+     const AddComment = async () => {
+      try {
+        await axios.post(
+          `${API_BASE}/api/v1/comments/Add/c/${VideoId}`,
+          { Content: CommentContent },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+              'Content-Type': 'application/json'
+            },
+            withCredentials: true
+          }
+        );
+        setMessage("Comment added successfully on this video!");
+        setTimeout(() => {
+          Navigate(0);
+        }, 1000);
+      } catch (error) {
+        console.error("Error in AddComment:", error);
       }
+    };
+    
 
   return (
 

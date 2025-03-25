@@ -14,8 +14,12 @@ const API_BASE  = import.meta.env.VITE_API_URL;
 useEffect(() => {
   const fetchChannelInfo = async () => {
     try {
-        const response = await axios.get(`${API_BASE}/api/v1/users/c/${ChannelId}`)
-        console.log(response , "Channel fetched sucessfully")
+        const response = await axios.get(`${API_BASE}/api/v1/users/c/${ChannelId}` ,  {
+          headers: {
+           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+         }
+       },   
+        )
         setChannelInfo(  response.data.data)
         setChannelSubButton(response.data.data.isSubscribed)
     } catch (error) {

@@ -14,15 +14,24 @@ function GetUserPlaylists() {
  const API_BASE  = import.meta.env.VITE_API_URL;
 
 
- 
-  const fetchUserPlaylists = async () => {
-    try {
-      const response = await axios.get(`${API_BASE}/api/v1/playlist/UserPlaylist`);
-      setPlaylists(response.data.data);
-    } catch (error) {
-      console.error('Error while fetching user playlists', error);
-    }
-  };
+ const fetchUserPlaylists = async () => {
+  try {
+    const response = await axios.get(
+      `${API_BASE}/api/v1/playlist/UserPlaylist`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      }
+    );
+    setPlaylists(response.data.data);
+  } catch (error) {
+    console.error('Error while fetching user playlists', error);
+  }
+};
+
 
   useEffect(() => {
     fetchUserPlaylists();

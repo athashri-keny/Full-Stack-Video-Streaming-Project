@@ -52,32 +52,58 @@ const API_BASE  = import.meta.env.VITE_API_URL;
   // Like function
   const fetchLike = async () => {
     try {
-      await axios.get(`${API_BASE}/api/v1/likes/c/${VideoId}`);
-      console.log("Video Liked Successfully");
+      await axios.get(`${API_BASE}/api/v1/likes/c/${VideoId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      });
+  
       setNotification("Video Liked Successfully!");
       setTimeout(() => {
-        setNotification(""); 
+        setNotification("");
       }, 3000);
     } catch (error) {
       console.log("Error while liking", error);
     }
   };
-
-
+  
   // subscribe
- const HandleSubscribe =  async () => {
-  try {
-    if (!channelSubButton) {
-       await axios.post(`${API_BASE}/api/subs/substochannel/c/${ChannelId}`);
-       setChannelSubButton(true);
-       } else {
-       await axios.post(`${API_BASE}/api/subs/substochannel/c/${ChannelId}`);
-      setChannelSubButton(false);
+  const HandleSubscribe = async () => {
+    try {
+      if (!channelSubButton) {
+        await axios.post(
+          `${API_BASE}/api/subs/substochannel/c/${ChannelId}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+              'Content-Type': 'application/json'
+            },
+            withCredentials: true
+          }
+        );
+        setChannelSubButton(true);
+      } else {
+        await axios.post(
+          `${API_BASE}/api/subs/substochannel/c/${ChannelId}`,
+          {}, 
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+              'Content-Type': 'application/json'
+            },
+            withCredentials: true
+          }
+        );
+        setChannelSubButton(false);
+      }
+    } catch (error) {
+      console.error("Sub failed", error);
     }
-  } catch (error) {
-    console.error("Sub failed")
-  }
- }
+  };
+  
 
  const handleChannelRedirect = () => {
   navigate(`/channelInfo/c/${channel._id}`);

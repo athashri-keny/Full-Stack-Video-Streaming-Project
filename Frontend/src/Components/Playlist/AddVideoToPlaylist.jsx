@@ -34,18 +34,26 @@ function AddVideoToPlaylist() {
     }
   }
  
-
   const UserPlaylist = async () => {
     try {
-      const response = await axios.get(`${API_BASE}/api/v1/playlist/UserPlaylist`)
-      setPlaylists(response.data.data)
-      setPlaylistID(response.data.data[0]._id)
-
+      const response = await axios.get(
+        `${API_BASE}/api/v1/playlist/UserPlaylist`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        }
+      );
+  
+      setPlaylists(response.data.data);
+      setPlaylistID(response.data.data[0]._id);
     } catch (error) {
-      console.error('Error while fetching user Playlist', error)
+      console.error('Error while fetching user Playlist', error);
     }
-
-  }
+  };
+  
 
   const DelVideoPlaylist = async () => {
     try {

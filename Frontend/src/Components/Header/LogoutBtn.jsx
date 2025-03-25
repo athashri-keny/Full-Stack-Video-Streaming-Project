@@ -12,6 +12,11 @@ function Logout() {
   const LogoutHandler =  async () => {
     try {
       const response = await axios.post(`${API_BASE}/api/v1/users/logout` , 
+        {
+         headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        }
+      },
         {withCredentials: true})
       if (response) {
         dispatch(LogoutAction())
