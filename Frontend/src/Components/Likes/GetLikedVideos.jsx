@@ -15,7 +15,7 @@ function LikesVideos() {
   useEffect(() => {
     const GetLikedVideos = async () => {
       try {
-        const response = await axios.get(`${API_BASE}/api/likes/GetLikedVideos`);
+        const response = await axios.get(`${API_BASE}/api/v1/likes/GetLikedVideos`);
         // Aggregate all LikedVideos from each entry
         const allVideos = response.data.data.LikedVideos.flatMap(user => user.LikedVideos);
         setLikedVideos(allVideos);

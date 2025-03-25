@@ -17,7 +17,7 @@ function GetUserPlaylists() {
  
   const fetchUserPlaylists = async () => {
     try {
-      const response = await axios.get(`${API_BASE}/api/playlist/UserPlaylist`);
+      const response = await axios.get(`${API_BASE}/api/v1/playlist/UserPlaylist`);
       setPlaylists(response.data.data);
     } catch (error) {
       console.error('Error while fetching user playlists', error);
@@ -31,8 +31,8 @@ function GetUserPlaylists() {
 
   const onCreatePlaylist = async (data) => {
     try {
-      const response = await axios.post(
-        `${API_BASE}/api/playlist/CreatePlaylist`,
+       await axios.post(
+        `${API_BASE}/api/v1/playlist/CreatePlaylist`,
         data,
         { headers: { 'Content-Type': 'application/json' } }
       );

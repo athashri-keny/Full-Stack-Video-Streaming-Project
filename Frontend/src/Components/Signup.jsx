@@ -51,7 +51,7 @@ const Create = async (data) => {
       console.log(data.coverImage[0])
     }
 
-    const response = await axios.post(`${API_BASE}/api/users/register`, formdata, {
+    const response = await axios.post(`${API_BASE}/api/v1/users/register`, formdata, {
       headers: { "Content-Type": "multipart/form-data" },
     });
 

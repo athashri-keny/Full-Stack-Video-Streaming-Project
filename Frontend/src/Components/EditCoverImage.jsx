@@ -24,7 +24,7 @@ function EditCoverImage() {
     const formdata = new FormData()
     formdata.append('coverImage' , File)
 
-   axios.patch(`${API_BASE}api/users/cover-image` , formdata , {
+   axios.patch(`${API_BASE}api/v1/users/cover-image` , formdata , {
     headers: {"Content-Type": "multipart/form-data"}
    })
 

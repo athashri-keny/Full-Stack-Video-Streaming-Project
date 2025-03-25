@@ -22,7 +22,7 @@ function AddVideoToPlaylist() {
   const addVideo = async (playlistId) => {
     try {
       await axios.post(
-        `${API_BASE}/api/playlist/AddVideoToPlaylist/c/${VideoId}`,
+        `${API_BASE}/api/v1/playlist/AddVideoToPlaylist/c/${VideoId}`,
         { PlaylistId: playlistId },
         { headers: { "Content-Type": "application/json" } }
       )
@@ -37,7 +37,7 @@ function AddVideoToPlaylist() {
 
   const UserPlaylist = async () => {
     try {
-      const response = await axios.get(`${API_BASE}/api/playlist/UserPlaylist`)
+      const response = await axios.get(`${API_BASE}/api/v1/playlist/UserPlaylist`)
       setPlaylists(response.data.data)
       setPlaylistID(response.data.data[0]._id)
 
@@ -49,7 +49,7 @@ function AddVideoToPlaylist() {
 
   const DelVideoPlaylist = async () => {
     try {
-      await axios.delete(`${API_BASE}/api/playlist/remove/c/${VideoId}`, {
+      await axios.delete(`${API_BASE}/api/v1/playlist/remove/c/${VideoId}`, {
         data: { PlaylistId: PlaylistId },
         headers: { "Content-Type": "application/json" }
       })

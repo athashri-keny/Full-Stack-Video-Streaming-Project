@@ -26,7 +26,7 @@ const login = async (data ) => {
   SetError(''); // Reset error state
   
   try {
-    const response = await axios.post(`${API_BASE}/api/users/login`, data ,  {withCredentials: true}) ;
+    const response = await axios.post(`${API_BASE}/api/v1/users/login`, data ,  {withCredentials: true}) ;
 
     if (response.data) { 
         dispatch(LoginAction(response.data.data));

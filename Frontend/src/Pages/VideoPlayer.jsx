@@ -52,7 +52,7 @@ const API_BASE  = import.meta.env.VITE_API_URL;
   // Like function
   const fetchLike = async () => {
     try {
-      await axios.get(`${API_BASE}/api/likes/c/${VideoId}`);
+      await axios.get(`${API_BASE}/api/v1/likes/c/${VideoId}`);
       console.log("Video Liked Successfully");
       setNotification("Video Liked Successfully!");
       setTimeout(() => {

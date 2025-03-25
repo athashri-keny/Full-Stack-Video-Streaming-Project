@@ -15,7 +15,7 @@ const API_BASE  = import.meta.env.VITE_API_URL;
 useEffect(() => {
 try {
     const FetchHistory =  async () => {
-     const response =  await axios.get(`${API_BASE}/api/users/history`)
+     const response =  await axios.get(`${API_BASE}/api/v1/users/history`)
      console.log(response , "Watch History Fetch Successfully")
      setVideos(response.data.data)
     }

@@ -15,7 +15,7 @@ function UserInfo() {
   const API_BASE  = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    axios.get(`${API_BASE}api/users/current-user`, { withCredentials: true })
+    axios.get(`${API_BASE}/api/v1/users/current-user`, { withCredentials: true })
       .then((response) => {
         setUserdata(response.data.data);
         setLoading(false);

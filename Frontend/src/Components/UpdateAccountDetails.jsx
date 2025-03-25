@@ -22,7 +22,7 @@ function UpdateAccountDetails() {
       fullname: fullname,
     };
     try {
-      await axios.patch(`${API_BASE}/api/users/update-account`, data, {
+      await axios.patch(`${API_BASE}/api/v1/users/update-account`, data, {
         headers: { 'Content-Type': 'application/json' },
       });
       setSuccessMessage('Details updated successfully!');

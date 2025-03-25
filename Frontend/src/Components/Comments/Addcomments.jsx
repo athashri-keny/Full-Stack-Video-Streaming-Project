@@ -19,7 +19,7 @@ function Addcomment() {
 
     const AddComment = async () => {
        try {
-          await axios.post(`${API_BASE}/api/comments/Add/c/${VideoId} ` ,   
+          await axios.post(`${API_BASE}/api/v1/comments/Add/c/${VideoId} ` ,   
              {Content: CommentContent}
             , {
               headers: {

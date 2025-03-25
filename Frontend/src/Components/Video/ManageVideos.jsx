@@ -18,7 +18,7 @@ function ManageVideos() {
   useEffect(() => {
     const fetchVideos = async () => {
         try {
-            const response = await axios.get(`${API_BASE}/api/videos/VideoUploadByOwner`) // get all videos 
+            const response = await axios.get(`${API_BASE}/api/v1/videos/VideoUploadByOwner`) // get all videos 
               setVideos(response.data.data.videos)
            } catch (error) {
             console.log(error , "error while fetching the video")

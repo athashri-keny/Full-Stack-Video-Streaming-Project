@@ -22,7 +22,7 @@ function EditTitleDes() {
     const handleUpdate = async () => {
     try {
       const response = await axios.patch(
-        `${API_BASE}/api/videos/update/c/${VideoId}`,
+        `${API_BASE}/api/v1/videos/update/c/${VideoId}`,
         {
            title : title, 
            description: description
@@ -43,7 +43,7 @@ function EditTitleDes() {
 
   const HandleDelete = async () => {
     try {
-      await axios.delete(`${API_BASE}/api/videos/delete/c/${VideoId}`)
+      await axios.delete(`${API_BASE}/api/v1/videos/delete/c/${VideoId}`)
       console.log("Video Deleted Sucessfully")
       SetDeleteMessage("Video Deleted Sucessfully!")
       Navigate('/')

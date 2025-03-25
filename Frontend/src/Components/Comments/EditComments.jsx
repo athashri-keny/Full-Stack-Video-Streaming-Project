@@ -19,7 +19,7 @@ function EditComments({ comment }) {
   const EditComm = async () => {
     try {
       await axios.patch(
-        `${API_BASE}/api/comments/update/c/${VideoId}`,
+        `${API_BASE}/api/v1/comments/update/c/${VideoId}`,
         {
           UpdatedComment: editedComment,
           CommentId: comment._id,
@@ -34,7 +34,7 @@ function EditComments({ comment }) {
 
   const DeleteComment = async () => {
     try {
-      await axios.delete(`${API_BASE}/api/comments/delete/c/${VideoId}`, {
+      await axios.delete(`${API_BASE}/api/v1/comments/delete/c/${VideoId}`, {
         data: { CommentId: comment._id },
         headers: { "Content-Type": "application/json" }
       });

@@ -11,7 +11,7 @@ function Logout() {
 
   const LogoutHandler =  async () => {
     try {
-      const response = await axios.post(`${API_BASE}/api/users/logout` , {withCredentials: true})
+      const response = await axios.post(`${API_BASE}/api/v1/users/logout` , {withCredentials: true})
       if (response) {
         dispatch(LogoutAction())
         console.log( "logout Successfully")

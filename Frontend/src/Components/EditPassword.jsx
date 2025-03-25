@@ -22,7 +22,7 @@ const UpdatePass = async (e) => {
   e.preventDefault();
   try {
     // Send data as JSON
-      await axios.post(`${API_BASE}api/users/change-password`,
+      await axios.post(`${API_BASE}api/v1/users/change-password`,
       {
         oldPassword: oldPassword,
         newPassword: Newpassword 

@@ -38,7 +38,7 @@ if (!FormData) {
     console.log("formdata is missing")
 }
 
-const response = await axios.post(`${API_BASE}/api/videos/upload` , formdata, {
+const response = await axios.post(`${API_BASE}/api/v1/videos/upload` , formdata, {
     headers: {"Content-Type": "multipart/form-data"}
 })
 
