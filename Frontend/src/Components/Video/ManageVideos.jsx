@@ -18,7 +18,14 @@ function ManageVideos() {
   useEffect(() => {
     const fetchVideos = async () => {
         try {
-            const response = await axios.get(`${API_BASE}/api/v1/videos/VideoUploadByOwner`) // get all videos 
+            const response = await axios.get(`${API_BASE}/api/v1/videos/VideoUploadByOwner` , 
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                },
+                withCredentials: true // Only if using cookies
+              }
+            ) // get all videos 
               setVideos(response.data.data.videos)
            } catch (error) {
             console.log(error , "error while fetching the video")

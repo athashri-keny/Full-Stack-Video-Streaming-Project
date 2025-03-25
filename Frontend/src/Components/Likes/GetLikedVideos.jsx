@@ -11,11 +11,19 @@ function LikesVideos() {
   const darkMode = useSelector((state) => state.theme.DarkMode)
   const API_BASE  = import.meta.env.VITE_API_URL;
 
-
   useEffect(() => {
     const GetLikedVideos = async () => {
       try {
-        const response = await axios.get(`${API_BASE}/api/v1/likes/GetLikedVideos`);
+        const response = await axios.get(
+          `${API_BASE}/api/v1/likes/GetLikedVideos`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+              'Content-Type': 'application/json'
+            },
+            withCredentials: true
+          }
+        );
         // Aggregate all LikedVideos from each entry
         const allVideos = response.data.data.LikedVideos.flatMap(user => user.LikedVideos);
         setLikedVideos(allVideos);
@@ -25,6 +33,8 @@ function LikesVideos() {
     };
     GetLikedVideos();
   }, []);
+  
+  
   return (
     (
       <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>

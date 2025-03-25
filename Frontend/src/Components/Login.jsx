@@ -24,9 +24,14 @@ const API_BASE  = import.meta.env.VITE_API_URL;
 
 const login = async (data ) => {
   SetError(''); // Reset error state
-  
   try {
-    const response = await axios.post(`${API_BASE}/api/v1/users/login`, data ,  {withCredentials: true}) ;
+    const response = await axios.post(`${API_BASE}/api/v1/users/login`, data , 
+      {
+        headers:  {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        },
+      },
+      {withCredentials: true}) ;
 
     if (response.data) { 
         dispatch(LoginAction(response.data.data));

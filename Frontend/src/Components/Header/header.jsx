@@ -18,7 +18,13 @@ function Header() {
 
   useEffect(() => {
     axios
-      .get(`${API_BASE}/api/v1/users/current-user`, { withCredentials: true })
+      .get(`${API_BASE}/api/v1/users/current-user`, 
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          }
+        },
+        { withCredentials: true })
       .then((response) => {
         if (response.data) {
           setAvatar(response.data.data.avatar);

@@ -36,7 +36,11 @@ const updateAvatar = async () => {
   
   try {
     const response = await axios.patch(`${API_BASE}/api/v1/users/avatar`, formdata, {
-      headers: { "Content-Type": "multipart/form-data" }
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
     });
 
     // Check if the response contains the updated avatar

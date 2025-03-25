@@ -22,6 +22,7 @@ function EditTitleDes() {
     const handleUpdate = async () => {
     try {
       const response = await axios.patch(
+        
         `${API_BASE}/api/v1/videos/update/c/${VideoId}`,
         {
            title : title, 
@@ -29,8 +30,10 @@ function EditTitleDes() {
         },
         {
           headers: {
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            'Content-Type': 'application/json'
           },
+          withCredentials: true
         }
       );
       console.log("Video updated successfully:", response.data);

@@ -34,7 +34,13 @@ function GetUserPlaylists() {
        await axios.post(
         `${API_BASE}/api/v1/playlist/CreatePlaylist`,
         data,
-        { headers: { 'Content-Type': 'application/json' } }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        }
       );
       fetchUserPlaylists()
       setIsCreateModalOpen(false)

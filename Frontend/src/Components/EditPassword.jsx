@@ -17,28 +17,28 @@ const darkMode = useSelector((state) => state.theme.DarkMode);
 const Navigate = useNavigate()
 const API_BASE  = import.meta.env.VITE_API_URL;
 
-
 const UpdatePass = async (e) => {
   e.preventDefault();
   try {
     // Send data as JSON
-      await axios.post(`${API_BASE}api/v1/users/change-password`,
+    await axios.post(
+      `${API_BASE}/api/v1/users/change-password`,
       {
         oldPassword: oldPassword,
-        newPassword: Newpassword 
-      }, 
+        newPassword: Newpassword
+      },
       {
         headers: {
-          'Content-Type': 'application/json' 
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          'Content-Type': 'application/json'
         },
         withCredentials: true
       }
     );
 
-       
     setTimeout(() => {
-      Navigate('/userinfo')
-        }, 2000);
+      Navigate('/userinfo');
+    }, 2000);
 
     // Clear form fields
     SetOldPassword('');
@@ -47,7 +47,6 @@ const UpdatePass = async (e) => {
   } catch (error) {
     console.error('Error:', error);
     setMessage(error.response?.data?.message || "An error occurred");
-    
   }
 };
 

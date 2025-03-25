@@ -11,19 +11,27 @@ const [videos , setVideos] = useState([])
 const darkMode = useSelector((state) => state.theme.DarkMode)
 const API_BASE  = import.meta.env.VITE_API_URL;
 
-
 useEffect(() => {
-try {
-    const FetchHistory =  async () => {
-     const response =  await axios.get(`${API_BASE}/api/v1/users/history`)
-     console.log(response , "Watch History Fetch Successfully")
-     setVideos(response.data.data)
+  const fetchHistory = async () => {
+    try {
+      const response = await axios.get(
+        `${API_BASE}/api/v1/users/history`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          },
+          withCredentials: true // Only if using cookies
+        }
+      );
+      console.log(response, "Watch History Fetched Successfully");
+      setVideos(response.data.data);
+    } catch (error) {
+      console.error("Error while fetching watch history", error);
     }
- FetchHistory()
-  } catch (error) {
-      console.error("Error while fetching watch History")
-  }
-} , [])
+  };
+
+  fetchHistory();
+}, []);
 
   return (
     (

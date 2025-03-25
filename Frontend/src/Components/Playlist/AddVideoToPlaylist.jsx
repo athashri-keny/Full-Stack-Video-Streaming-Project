@@ -51,7 +51,11 @@ function AddVideoToPlaylist() {
     try {
       await axios.delete(`${API_BASE}/api/v1/playlist/remove/c/${VideoId}`, {
         data: { PlaylistId: PlaylistId },
-        headers: { "Content-Type": "application/json" }
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
       })
       console.log("Video Removed Sucessfully")
       Navigate(0)

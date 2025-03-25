@@ -22,9 +22,17 @@ function UpdateAccountDetails() {
       fullname: fullname,
     };
     try {
-      await axios.patch(`${API_BASE}/api/v1/users/update-account`, data, {
-        headers: { 'Content-Type': 'application/json' },
-      });
+      await axios.patch(
+        `${API_BASE}/api/v1/users/update-account`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        }
+      );
       setSuccessMessage('Details updated successfully!');
       setTimeout(() => {
         Navigate('/');
