@@ -33,7 +33,15 @@ const API_BASE  = import.meta.env.VITE_API_URL;
   useEffect(() => { 
     const fetchVideoData = async () => {
       try {
-        const response = await axios.get(`${API_BASE}/api/v1/videos/c/${VideoId}/c/${ChannelId}`);
+        const response = await axios.get(`${API_BASE}/api/v1/videos/c/${VideoId}/c/${ChannelId}` , 
+          {
+            headers: {
+             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+           }
+         },
+         
+          
+        );
         setVideo(response.data.data.video);
         setPublicId(response.data.data.video.VideoCloudinaryPublicId);
         setComments(response.data.data.Comments);

@@ -22,7 +22,7 @@ router.route("/register").post(
   router.route("/login").post(loginUser)
 
    // securred routes
-   router.route("/logout").post(logoutUser)
+   router.route("/logout").post( verifyjwt , logoutUser)
 
    router.route("refresh-token").post(refreshTokenAccessToken)
 
