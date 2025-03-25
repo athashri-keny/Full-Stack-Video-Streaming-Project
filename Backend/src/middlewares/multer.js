@@ -3,27 +3,25 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-// Get directory name in ES modules
-const __dirname = path.resolve();
+// 1. Set up basic paths
+const currentDir = path.resolve(); // Gets root project directory
+const tempFolder = path.join(currentDir, 'public', 'temp'); // Full path to temp folder
 
-// Configure absolute path for uploads
-const tempDir = path.join(__dirname, 'public', 'temp');
+// 2. Create temp folder if missing
+fs.mkdirSync(tempFolder, { recursive: true }); // Creates all folders in the path
 
-// Create directory if it doesn't exist
-fs.mkdirSync(tempDir, { recursive: true });
-
+// 3. Configure file storage
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, tempDir); // Use absolute path
+    destination: (req, file, cb) => {
+        cb(null, tempFolder); // Save files to public/temp
     },
-    filename: function (req, file, cb) {
-        // Add timestamp to filename to prevent collisions
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, `${uniqueSuffix}-${file.originalname}`);
+    filename: (req, file, cb) => {
+        cb(null, file.originalname); 
     }
 });
 
-export const upload = multer({ 
+// 4. Create the upload middleware
+export const upload = multer({
     storage,
-    limits: { fileSize: 100 * 1024 * 1024 } // Example: 100MB limit
+   
 });
