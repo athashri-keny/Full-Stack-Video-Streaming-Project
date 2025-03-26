@@ -19,7 +19,7 @@ const SideNav = () => {
             <NavLink 
               to="/" 
               className={({isActive}) => `flex items-center space-x-3 p-3 rounded-lg 
-                ${darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-600 hover:bg-gray-100'} 
+              ${darkMode ? 'text-gray-300 hover:bg-gray-700 bg-gray-900' : 'text-black hover:bg-gray-100 bg-white'}
                 ${isActive ? " bg-gray-700" : "bg-gray-900"}
                 transition-all duration-300 hover:translate-x-2`}
             >

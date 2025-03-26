@@ -8,19 +8,14 @@ export default function Protected({ children, authentication = true }) {
   const authStatus = useSelector((state) => state.auth.status);
 
   useEffect(() => {
-      console.log('authStatus:', authStatus);
-
     if (authStatus === undefined) {
       return;
     }
   
     if (authentication && !authStatus) {
-
-      console.log('Redirecting to /login');
       navigate('/login');
       
     } else if (!authentication && authStatus) {
-      console.log('Redirecting to /');
       navigate('/');
     }
   

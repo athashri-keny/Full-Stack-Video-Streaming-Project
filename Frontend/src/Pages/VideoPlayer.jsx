@@ -27,9 +27,6 @@ const darkMode = useSelector((state) => state.theme.DarkMode);
 const API_BASE  = import.meta.env.VITE_API_URL;
 
 
-
-
-
   useEffect(() => { 
     const fetchVideoData = async () => {
       try {
@@ -38,9 +35,7 @@ const API_BASE  = import.meta.env.VITE_API_URL;
             headers: {
              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
            }
-         },
-         
-          
+         },       
         );
         setVideo(response.data.data.video);
         setPublicId(response.data.data.video.VideoCloudinaryPublicId);

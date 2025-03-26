@@ -6,6 +6,7 @@ import {Video} from "../models/video.model.js"
 import { user } from "../models/user.model.js";
 import { Tweets } from "../models/tweets.model.js";
 import { Comment } from "../models/commet.model.js";
+import mongoose from "mongoose";
 
 
 const ToggleVideoLike = asyncHandler(async(req , res) => {
@@ -197,8 +198,9 @@ const GetLikeVideos = asyncHandler(async(req , res) => {
       $match: {
         video: {
           $exists: true,
-        }
-      }
+        },
+        likedby: UserId,
+      },
     },
 
     {
@@ -233,6 +235,7 @@ const GetLikeVideos = asyncHandler(async(req , res) => {
     }))
   
 })
+
 
 
 export {
