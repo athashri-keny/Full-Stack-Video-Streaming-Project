@@ -31,7 +31,7 @@ const SideNav = () => {
             <NavLink
               to="/history"
               className={({isActive}) => `flex items-center space-x-3 p-3 rounded-lg 
-                ${darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-600 hover:bg-gray-100'} 
+                ${darkMode ? 'text-gray-300 hover:bg-gray-700  bg-gray-900' : 'text-gray-600 hover:bg-gray-100 bg-white'} 
                 ${isActive ? " bg-gray-700" : "bg-gray-900"}
                 transition-all duration-300 hover:translate-x-2`}
             >
@@ -43,7 +43,7 @@ const SideNav = () => {
             <NavLink
               to="/liked-videos"
               className={({isActive}) => `flex items-center space-x-3 p-3 rounded-lg 
-              ${darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-600 hover:bg-gray-100'} 
+              ${darkMode ? 'text-gray-300 hover:bg-gray-700 bg-gray-900' : 'text-gray-600 hover:bg-gray-100 bg-white'} 
               ${isActive ? " bg-gray-700" : "bg-gray-900"}
               transition-all duration-300 hover:translate-x-2`}
           >
@@ -55,7 +55,7 @@ const SideNav = () => {
             <NavLink
               to="/playlists"
               className={({isActive}) => `flex items-center space-x-3 p-3 rounded-lg 
-              ${darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-600 hover:bg-gray-100'} 
+              ${darkMode ? 'text-gray-300 hover:bg-gray-700 bg-gray-900' : 'text-gray-600 hover:bg-gray-100 bg-white'} 
               ${isActive ? " bg-gray-700" : "bg-gray-900"}
               transition-all duration-300 hover:translate-x-2`}
           >
@@ -67,7 +67,7 @@ const SideNav = () => {
             <NavLink
               to="/upload"
               className={({isActive}) => `flex items-center space-x-3 p-3 rounded-lg 
-              ${darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-600 hover:bg-gray-100'} 
+              ${darkMode ? 'text-gray-300 hover:bg-gray-700 bg-gray-900' : 'text-gray-600 hover:bg-gray-100 bg-white'} 
               ${isActive ? " bg-gray-700" : "bg-gray-900"}
               transition-all duration-300 hover:translate-x-2`}
           >
@@ -79,7 +79,7 @@ const SideNav = () => {
             <NavLink
               to="/manage-videos"
               className={({isActive}) => `flex items-center space-x-3 p-3 rounded-lg 
-              ${darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-600 hover:bg-gray-100'} 
+              ${darkMode ? 'text-gray-300 hover:bg-gray-700 bg-gray-900' : 'text-gray-600 hover:bg-gray-100 bg-white'} 
               ${isActive ? " bg-gray-700" : "bg-gray-900"}
               transition-all duration-300 hover:translate-x-2`}
           >
