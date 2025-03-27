@@ -38,8 +38,7 @@ const updateAvatar = async () => {
     const response = await axios.patch(`${API_BASE}/api/v1/users/avatar`, formdata, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        'Content-Type': 'application/json'
-      },
+       },
       withCredentials: true
     });
 

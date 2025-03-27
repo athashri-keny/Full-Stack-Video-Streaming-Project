@@ -283,6 +283,7 @@ const updateAccountDetails = asyncHandler(async(req , res) => {
 
 })
 
+
 // updating tge User avatar (profile photo)
 const updateUserAvatar = asyncHandler(async(req , res) => {
 
