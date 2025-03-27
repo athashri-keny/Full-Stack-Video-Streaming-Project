@@ -14,32 +14,37 @@ function EditCoverImage() {
    const darkMode = useSelector((state) => state.theme.darkMode);
    const [coverImageUpdated, setCoverImageUpdated] = useState(false);
    const API_BASE  = import.meta.env.VITE_API_URL;
+
    
-    const UpdateCoverImage = async() => {
-   seterror('')
-   const File = InputFileRef.current?.files?.[0]
-    console.log(File)
-
-   try {
-    const formdata = new FormData()
-    formdata.append('coverImage' , File)
-
-   axios.patch(`${API_BASE}/api/v1/users/cover-image` , formdata , {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-      withCredentials: true
-   })
-
-  } catch (error) {
-       seterror(error)
-   }
-   if (File) {
-    console.log("avatar updated sucessfully")
-    Navigate(0)
-   }
+   const UpdateCoverImage = async () => {
+    seterror('');
+    const File = InputFileRef.current?.files?.[0];
+    
+    if (!File) {
+        seterror('Please select a file');
+        return;
     }
 
+    try {
+        const formdata = new FormData();
+        formdata.append('coverImage', File);
+
+        const response = await axios.patch(`${API_BASE}/api/v1/users/cover-image`, formdata, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            },
+            withCredentials: true
+        });
+
+        if (response.status === 200) {
+            setCoverImageUpdated(true);
+            setTimeout(() => Navigate('/'), 1500); // Wait for success message to show
+        }
+    } catch (error) {
+        seterror(error.response?.data?.message || 'Failed to update cover image');
+    }
+}
   return  (
     <div>
         <div className="relative group">
