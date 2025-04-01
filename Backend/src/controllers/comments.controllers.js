@@ -8,7 +8,6 @@ import {Video} from '../models/video.model.js'
 // This function retrieves comments for a specific video.
 
 
-
 const GetVideoComment = asyncHandler(async(req , res) => {
     const {VideoId } = req.params
     const userID = req.user._id
@@ -24,6 +23,7 @@ const GetVideoComment = asyncHandler(async(req , res) => {
     const skip = (pageNum - 1) * limitNum
 
     const Comments = await Comment.find({ video: new mongoose.Types.ObjectId(VideoId) })
+
     .skip(skip) // Don't skip any comments
     .limit(limitNum) // Return the first 10 comments
     .sort({ createdAt: -1 }); // Ensure the 10 most recent comments are shown
@@ -40,7 +40,7 @@ const GetVideoComment = asyncHandler(async(req , res) => {
          page: pageNum,
          limit : limitNum,
          Comments: Comments,
-         owner: Userr
+         Owner: Userr
     }
 )
 });

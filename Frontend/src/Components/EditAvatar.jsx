@@ -20,7 +20,6 @@ const updateAvatar = async () => {
   seterror('');
   // Get the file from the file input
   const File = FileInputRef.current?.files?.[0] // using ref because it does not cause rendering  
-  console.log(File)
 
 
   if (!File) {

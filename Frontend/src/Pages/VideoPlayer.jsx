@@ -37,7 +37,6 @@ const API_BASE  = import.meta.env.VITE_API_URL;
            }
          },       
         );
-        console.log(response)
         setVideo(response.data.data.video);
         setPublicId(response.data.data.video.VideoCloudinaryPublicId);
         setComments(response.data.data.Comments);

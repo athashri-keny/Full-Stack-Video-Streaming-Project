@@ -22,10 +22,7 @@ const [showPassword , setShowPassword] = useState(false)
 const Create = async (data) => {
   seterror("");
   setIsLoading(true)
-  console.log('Signup data ', data);
   // Log files specifically
-  console.log('Avatar file:', data.avatar?.[0]);
-  console.log('CoverImage file:', data.coverImage?.[0]);
 
   
   try {
@@ -38,7 +35,6 @@ const Create = async (data) => {
     // Check for files explicitly
     if (data.avatar?.[0]) {
       formdata.append('avatar', data.avatar[0]);
-      console.log(data.avatar[0])
     } else {
       console.error("Avatar file is missing");
       seterror("Avatar is required");
@@ -48,7 +44,6 @@ const Create = async (data) => {
 
     if (data.coverImage?.[0]) {
       formdata.append('coverImage', data.coverImage[0]);
-      console.log(data.coverImage[0])
     }
 
     const response = await axios.post(`${API_BASE}/api/v1/users/register`, formdata, {
