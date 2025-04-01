@@ -16,7 +16,7 @@ const VideoPlayerPage = () => {
   const [publicId, setPublicId] = useState('');
   const [channel, setChannelData] = useState(null);
   const [comments, setComments] = useState([]);
-  const [ownerComment, setOwnerComment] = useState(null);
+  const [ownerComment, setOwnerComment] = useState();
   const [notification, setNotification] = useState("");
   const { VideoId , ChannelId} = useParams();
   const navigate = useNavigate();
@@ -37,6 +37,7 @@ const API_BASE  = import.meta.env.VITE_API_URL;
            }
          },       
         );
+        console.log(response)
         setVideo(response.data.data.video);
         setPublicId(response.data.data.video.VideoCloudinaryPublicId);
         setComments(response.data.data.Comments);
