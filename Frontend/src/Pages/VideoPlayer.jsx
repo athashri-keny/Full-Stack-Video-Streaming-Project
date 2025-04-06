@@ -22,7 +22,6 @@ const VideoPlayerPage = () => {
   const navigate = useNavigate();
 const [channelSubButton , setChannelSubButton] = useState(false)
   const [subscribeChannel , setsubscribeChannel] = useState("")
-const Dispatch = useDispatch()
 const darkMode = useSelector((state) => state.theme.DarkMode);
 const API_BASE  = import.meta.env.VITE_API_URL;
 
@@ -37,6 +36,7 @@ const API_BASE  = import.meta.env.VITE_API_URL;
            }
          },       
         );
+        console.log(response)
         setVideo(response.data.data.video);
         setPublicId(response.data.data.video.VideoCloudinaryPublicId);
         setComments(response.data.data.Comments);

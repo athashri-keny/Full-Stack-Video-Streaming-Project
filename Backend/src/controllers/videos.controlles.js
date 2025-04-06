@@ -225,27 +225,14 @@ const getVideoAndChannelProfile = asyncHandler(async (req, res) => {
        if (!VideoId) {
            throw new ApiError(404 , "Video ID is required!")
        }
-       const {page = 1 , limit  = 10} = req.query
-   
-       const pageNum = parseInt(page , 10)
-       const limitNum = parseInt(limit , 10)
-   
-       const skip = (pageNum - 1) * limitNum
    
        const Comments = await Comment.find({ video: new mongoose.Types.ObjectId(VideoId) })
-       .skip(skip) // Don't skip any comments
-       .limit(limitNum) // Return the first 10 comments
-       .sort({ createdAt: -1 }); // Ensure the 10 most recent comments are shown
-       
-       // this user is logined in user and who watches the video
-       const Userr = await user.findById( new mongoose.Types.ObjectId(userID))
-       .select(
-        "username avatar createdAt "
-       )
+      .populate("owner", "username avatar createdAt");
+     
      
 
            return res.status(200).json(
-        new ApiResponse(200, { video: foundVideo, channel: channel[0]  ,  Comments: Comments , Userr ,
+        new ApiResponse(200, { video: foundVideo, channel: channel[0]  ,  Comments: Comments ,
 
         }, "Video and channel fetched successfully!")
       );
