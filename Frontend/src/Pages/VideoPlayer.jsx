@@ -41,7 +41,7 @@ const API_BASE  = import.meta.env.VITE_API_URL;
         setPublicId(response.data.data.video.VideoCloudinaryPublicId);
         setComments(response.data.data.Comments);
         setChannelData(response.data.data.channel);
-        setOwnerComment(response.data.data.Userr);
+        setOwnerComment(response.data.data.Comments[0]);
         setsubscribeChannel(response.data.data.channel._id)
         setChannelSubButton(response.data.data.channel.isSubscribed)
         } catch (error) {
@@ -222,16 +222,16 @@ const API_BASE  = import.meta.env.VITE_API_URL;
               >
                 <div className="flex items-start gap-2">
                   <img
-                    src={ownerComment?.avatar}
-                    alt={ownerComment?.username}
+                    src={comment.owner.avatar}
+                    alt={comment.owner.username}
                     className="w-8 h-8 rounded-full object-cover"
                   />
                   <div className="flex-1">
                     <p className={`text-sm font-medium`}>
-                      {ownerComment?.username}
+                      {comment.owner.username}
                     </p>
                     <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                      {comment.content}
+                      {comment.owner.content}
                     </p>
                   </div>
                   <EditComments comment={comment} />
