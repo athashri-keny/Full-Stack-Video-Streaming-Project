@@ -77,7 +77,7 @@ const API_BASE  = import.meta.env.VITE_API_URL;
     try {
       if (!channelSubButton) {
         await axios.post(
-          `${API_BASE}/api/subs/substochannel/c/${ChannelId}`,
+          `${API_BASE}/api/v1/subs/substochannel/c/${ChannelId}`,
           {},
           {
             headers: {
@@ -90,7 +90,7 @@ const API_BASE  = import.meta.env.VITE_API_URL;
         setChannelSubButton(true);
       } else {
         await axios.post(
-          `${API_BASE}/api/subs/substochannel/c/${ChannelId}`,
+          `${API_BASE}/api/v1/subs/substochannel/c/${ChannelId}`,
           {}, 
           {
             headers: {
