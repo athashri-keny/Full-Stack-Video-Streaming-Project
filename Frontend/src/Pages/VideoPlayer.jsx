@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import Addcomment from '../Components/Comments/Addcomments';
 import EditComments from '../Components/Comments/EditComments';
-import { useSelector , useDispatch } from 'react-redux'
+import { useSelector  } from 'react-redux'
 import AddVideoToPlaylist from '../Components/Playlist/AddVideoToPlaylist';
 
 
@@ -16,7 +16,7 @@ const VideoPlayerPage = () => {
   const [publicId, setPublicId] = useState('');
   const [channel, setChannelData] = useState(null);
   const [comments, setComments] = useState([]);
-  const [ownerComment, setOwnerComment] = useState();
+  const [ownerComment, setOwnerComment] = useState([]);
   const [notification, setNotification] = useState("");
   const { VideoId , ChannelId} = useParams();
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ const API_BASE  = import.meta.env.VITE_API_URL;
         setPublicId(response.data.data.video.VideoCloudinaryPublicId);
         setComments(response.data.data.Comments);
         setChannelData(response.data.data.channel);
-        setOwnerComment(response.data.data.Comments[0]);
+        setOwnerComment(response.data.data.Comments);
         setsubscribeChannel(response.data.data.channel._id)
         setChannelSubButton(response.data.data.channel.isSubscribed)
         } catch (error) {
