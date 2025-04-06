@@ -17,10 +17,11 @@ useEffect(() => {
         const response = await axios.get(`${API_BASE}/api/v1/users/c/${ChannelId}` ,  {
           headers: {
            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-         }
+           'Content-Type': 'application/json'
+         },
        },   
         )
-        setChannelInfo(  response.data.data)
+        setChannelInfo(response.data.data)
         setChannelSubButton(response.data.data.isSubscribed)
     } catch (error) {
         console.error("Error while fetching the channel info")

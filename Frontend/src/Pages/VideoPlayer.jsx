@@ -187,7 +187,7 @@ const API_BASE  = import.meta.env.VITE_API_URL;
             </button>
             <AddVideoToPlaylist/>
             <button 
-              onClick={() => { HandleSubscribe(); Dispatch(ClickToSub()); }}
+              onClick={() => { HandleSubscribe(); }}
               className={`text-xm px-2 py-1 rounded-md ${
                 channelSubButton
                   ? `${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-600 hover:bg-gray-700'}`
