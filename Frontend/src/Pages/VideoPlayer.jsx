@@ -231,7 +231,7 @@ const API_BASE  = import.meta.env.VITE_API_URL;
                       {comment.owner.username}
                     </p>
                     <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                      {comment.owner.content}
+                      {comment.content}
                     </p>
                   </div>
                   <EditComments comment={comment} />
