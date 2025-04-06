@@ -2,15 +2,13 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
 function Addcomment() {
     const {VideoId} = useParams()
       const [CommentContent , SetCommentContent] = useState("")
       const [message , setMessage] = useState("")
      const darkMode = useSelector((state) => state.theme.DarkMode)
-     const Navigate = useNavigate(0)
-     const API_BASE  = import.meta.env.VITE_API_URL;
+      const API_BASE  = import.meta.env.VITE_API_URL;
 
       
      const handleComSubmit = async (e) => {
@@ -32,8 +30,7 @@ function Addcomment() {
         );
         setMessage("Comment added successfully on this video!");
         setTimeout(() => {
-          Navigate(0);
-        }, 1000);
+             }, 1000);
       } catch (error) {
         console.error("Error in AddComment:", error);
       }

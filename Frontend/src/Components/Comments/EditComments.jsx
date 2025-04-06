@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function EditComments({ comment }) {
   const [editedComment, setEditedComment] = useState(comment.content);
   const { VideoId } = useParams();
-  const navigate = useNavigate();
   const [commentModal, setCommentModal] = useState(false);
   const [activeComEdit, setActiveComEdit] = useState(null);
   const API_BASE  = import.meta.env.VITE_API_URL;
@@ -32,8 +31,7 @@ function EditComments({ comment }) {
           withCredentials: true
         }
       );
-      navigate(0);
-    } catch (error) {
+     } catch (error) {
       console.error("Error updating comment:", error);
     }
   };
@@ -49,8 +47,7 @@ function EditComments({ comment }) {
         },
         withCredentials: true
       });
-      navigate(0);
-    } catch (error) {
+       } catch (error) {
       console.error("Error deleting comment:", error);
     }
   };

@@ -32,17 +32,38 @@ useEffect(() => {
 
 const HandleSubscribe = async () => {
   try {
-       if (!channelSubButton) {
-         await axios.post(`${API_BASE}/api/v1/subs/substochannel/c/${ChannelId}`);
-         setChannelSubButton(true);
-           } else {
-         await axios.post(`${API_BASE}/api/v1/subs/substochannel/c/${ChannelId}`);
-        setChannelSubButton(false);
-      }
+    if (!channelSubButton) {
+       await axios.post(
+        `${API_BASE}/api/v1/subs/substochannel/c/${ChannelId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+        }
+      );
+      setChannelSubButton(true);
+    } else {
+      await axios.post(
+        `${API_BASE}/api/v1/subs/substochannel/c/${ChannelId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+        }
+      );
+      setChannelSubButton(false);
+    }
   } catch (error) {
-    console.error("error while subscribing the channel ")
+    console.error("Error while subscribing the channel", error);
   }
-}
+};
+
 
 return (
   <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-4">
