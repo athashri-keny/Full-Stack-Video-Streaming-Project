@@ -52,6 +52,7 @@ function EditComments({ comment }) {
     }
   };
   
+  // selecting one particular comment by using index
   const toggleManageComment = (index) => {
     setActiveComEdit(activeComEdit === index ? null : index);
   };
