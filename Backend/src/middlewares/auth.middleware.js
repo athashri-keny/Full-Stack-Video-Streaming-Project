@@ -31,6 +31,7 @@ export const verifyjwt = asyncHandler(async (req, res, next) => {
         next();
     } catch (error) {
         // Pass the error to the Express error handler
-        next(new ApiError(401, error?.message || 'Invalid access token'));
+       req.user = null
+       next()
     }
 });
