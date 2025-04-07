@@ -81,7 +81,7 @@ const Router = createBrowserRouter([
       {
         path: "/liked-videos",
         element: (
-          <AuthLayout authentication = {false}>
+          <AuthLayout authentication = {true}>
             <LikedVideos/>
           </AuthLayout>
         )
@@ -89,7 +89,7 @@ const Router = createBrowserRouter([
       {
         path: "/playlists",
         element: (
-          <AuthLayout authentication  = {false}>
+          <AuthLayout authentication  = {true}>
             <Playlist/>
           </AuthLayout>
         )
@@ -106,7 +106,7 @@ const Router = createBrowserRouter([
      {
       path: "/watch/c/:VideoId/c/:ChannelId",
       element: (
-        <AuthLayout authentication = {false}
+        <AuthLayout authentication = {true}
         >
           <VideoPlayerPage/>
         </AuthLayout>

@@ -118,7 +118,7 @@ const publishVideo = asyncHandler(async (req, res) => {
 
 
 const getVideoAndChannelProfile = asyncHandler(async (req, res) => {
-  const { VideoId , ChannelId } = req.params; // Expecting a valid VideoId from URL parameters  
+  const { VideoId , ChannelId } = req.params; // Expecting a valid VideoId from URL parameters
   const userID = req.user._id
   
   if (!VideoId) {
