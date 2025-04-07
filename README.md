@@ -1,1 +1,1 @@
-# Full-Stack-Video-Streaming-Project
+A Full Stack Streaming App Made using Mern Stack 
