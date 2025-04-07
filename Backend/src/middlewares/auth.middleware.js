@@ -13,7 +13,8 @@ export const verifyjwt = asyncHandler(async (req, res, next) => {
             req.header('Authorization')?.replace('Bearer ', '').trim();
 
         if (!token) {
-            throw new ApiError(401, 'Unauthorized request: No token provided');
+           req.user = null;
+           return next()
         }
         // Verify the token
         const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
@@ -26,7 +27,7 @@ export const verifyjwt = asyncHandler(async (req, res, next) => {
         }
        
         // Attach the user object to the request
-        req.user = foundUser;
+        req.user = foundUser || null;
         next();
     } catch (error) {
         // Pass the error to the Express error handler

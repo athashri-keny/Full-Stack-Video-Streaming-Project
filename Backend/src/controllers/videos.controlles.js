@@ -118,11 +118,9 @@ const publishVideo = asyncHandler(async (req, res) => {
 
 
 const getVideoAndChannelProfile = asyncHandler(async (req, res) => {
-  const { VideoId , ChannelId } = req.params; // Expecting a valid VideoId from URL parameters
-  const userID = req.user?._id
+  const { VideoId , ChannelId } = req.params; // Expecting a valid VideoId from URL parameters  
+  const userID = req.user._id
   
-  if (userID === null) {
-    
   if (!VideoId) {
     throw new ApiError(400, "Video ID is required!");
   }
@@ -134,52 +132,32 @@ const getVideoAndChannelProfile = asyncHandler(async (req, res) => {
   const foundVideo = await Video.findById(VideoId).select(
     "videoFile thumbnail title description time VideoCloudinaryPublicId thumbnailCloudinaryPublicId owner isPublished"
   );
+
   if (!foundVideo) {
     throw new ApiError(404, "Video not found");
   }
- 
-  }
-  else {
-    
-    if (!VideoId) {
-      throw new ApiError(400, "Video ID is required!");
-    }
-    if (!ChannelId) {
-      console.log("Channel id not found")
-    }
-
-    const foundVideo = await Video.findById(VideoId).select(
-      "videoFile thumbnail title description time VideoCloudinaryPublicId thumbnailCloudinaryPublicId owner isPublished"
-    );
-
-    if (!foundVideo) {
-      throw new ApiError(404, "Video not found");
-    }
-  
-    await Video.updateOne(
-      {_id: VideoId },
-    {$inc: {views: 1}}
-  ) 
-  
-  // watch history
-   await user.findByIdAndUpdate(
-    req.user._id,
-  
-   {
-    $push: {
-      watchHistory: {
-        $each: [new mongoose.Types.ObjectId(VideoId)],
-        $position: 0,
-        $slice: 50
-      }
-    }
-   }
-   )  
-  }
- 
-  
   
   // updating the views this updates the views
+  await Video.updateOne(
+    {_id: VideoId },
+  {$inc: {views: 1}}
+) 
+
+// watch history
+ await user.findByIdAndUpdate(
+  req.user._id,
+
+ {
+  $push: {
+    watchHistory: {
+      $each: [new mongoose.Types.ObjectId(VideoId)],
+      $position: 0,
+      $slice: 50
+    }
+  }
+ }
+ )
+
 
  
   const channel = await user.aggregate([
