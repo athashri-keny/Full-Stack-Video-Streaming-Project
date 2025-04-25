@@ -21,6 +21,7 @@ function UpdateAccountDetails() {
       email: NewEmail,
       fullname: fullname,
     };
+
     try {
       await axios.patch(
         `${API_BASE}/api/v1/users/update-account`,
@@ -33,6 +34,7 @@ function UpdateAccountDetails() {
           withCredentials: true
         }
       );
+
       setSuccessMessage('Details updated successfully!');
       setTimeout(() => {
         Navigate('/');
@@ -67,8 +69,7 @@ function UpdateAccountDetails() {
         </h2>
 
         <form onSubmit={UpdateDetails} className="space-y-6">
-          {/* Email Input */}
-          <div className="animate-slide-in-left">
+            <div className="animate-slide-in-left">
             <label
               className={`block text-sm font-medium mb-2 transition-all duration-300 ${
                 darkMode
@@ -92,8 +93,7 @@ function UpdateAccountDetails() {
             />
           </div>
 
-          {/* Full Name Input */}
-          <div className="animate-slide-in-right">
+             <div className="animate-slide-in-right">
             <label
               className={`block text-sm font-medium mb-2 transition-all duration-300 ${
                 darkMode

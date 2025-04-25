@@ -23,9 +23,9 @@ function ManageVideos() {
                 headers: {
                   Authorization: `Bearer ${localStorage.getItem('accessToken')}`
                 },
-                withCredentials: true // Only if using cookies
+                withCredentials: true 
               }
-            ) // get all videos 
+            ) 
               setVideos(response.data.data.videos)
            } catch (error) {
             console.log(error , "error while fetching the video")
@@ -55,7 +55,6 @@ return  <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}
             darkMode ? 'bg-gray-800' : 'bg-white'
           }`}
         >
-          {/* Thumbnail Container */}
           <div className="relative">
             <img
               src={video.thumbnail}
@@ -64,7 +63,6 @@ return  <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}
             />
           </div>
           
-          {/* Video Details */}
           <div className="p-4 flex flex-col flex-grow">
             <h2 className={`text-lg font-semibold mb-2 ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>
               {video.title}

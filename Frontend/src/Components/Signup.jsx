@@ -22,7 +22,7 @@ const [showPassword , setShowPassword] = useState(false)
 const Create = async (data) => {
   seterror("");
   setIsLoading(true)
-  // Log files specifically
+
 
   
   try {
@@ -32,7 +32,7 @@ const Create = async (data) => {
     formdata.append("username", data.username);
     formdata.append("password", data.password);
 
-    // Check for files explicitly
+
     if (data.avatar?.[0]) {
       formdata.append('avatar', data.avatar[0]);
     } else {
@@ -54,7 +54,7 @@ const Create = async (data) => {
       setmessage("Account Created Successfully!! Redirecting to Login...");
       setTimeout(() => {
         Navigate('/login');
-      }, 4000); // 2000ms = 2 seconds delay
+      }, 4000); 
     }
        } catch (error) {
     const errorMsg = error.response?.data?.message || 'Something went wrong';

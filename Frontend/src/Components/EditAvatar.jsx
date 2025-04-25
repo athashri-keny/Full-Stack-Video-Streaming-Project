@@ -16,11 +16,8 @@ const darkMode = useSelector((state) => state.theme.darkMode);
 const API_BASE  = import.meta.env.VITE_API_URL;
 
 const updateAvatar = async () => {
-  // Clear any previous errors
   seterror('');
-  // Get the file from the file input
-  const File = FileInputRef.current?.files?.[0] // using ref because it does not cause rendering  
-
+  const File = FileInputRef.current?.files?.[0] 
 
   if (!File) {
     console.error("Avatar file is missing");
@@ -29,7 +26,7 @@ const updateAvatar = async () => {
   }
   setavatarUpdated(!avatarUpdated)
  
-  // Create a FormData object and append the file
+ 
   const formdata = new FormData();
   formdata.append('avatar', File);
   
@@ -41,12 +38,11 @@ const updateAvatar = async () => {
       withCredentials: true
     });
 
-    // Check if the response contains the updated avatar
+   
     if (response.data.avatar) {
       console.log("Avatar updated successfully");
       Navigate(0)      
-       // reload the page to show changes
-      // Optionally, update state or do further processing here
+      
     }
   } catch (error) {
     const errorMsg = error.response?.data?.message || "Error uploading avatar";
@@ -55,7 +51,6 @@ const updateAvatar = async () => {
   }
 };
 
-// refs are used to  programmatically trigger the hidden file  input click event
 return (
   <div>
     <div className="relative group">

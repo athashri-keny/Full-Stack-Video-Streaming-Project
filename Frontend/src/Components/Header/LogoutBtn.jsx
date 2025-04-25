@@ -6,15 +6,14 @@ import { useNavigate } from 'react-router-dom';
 
 function Logout() {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // initialize once at the top
+  const navigate = useNavigate(); 
   const API_BASE = import.meta.env.VITE_API_URL;
 
   const LogoutHandler = async () => {
     const accessToken = localStorage.getItem('accessToken');
     
     try {
-      // Send logout request with proper headers
-      const response = await axios.post(
+       const response = await axios.post(
         `${API_BASE}/api/v1/users/logout`,
         {}, 
         {

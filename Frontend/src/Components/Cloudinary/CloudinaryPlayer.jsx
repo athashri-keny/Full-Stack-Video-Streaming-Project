@@ -6,7 +6,6 @@ const CloudinaryPlayer = ({ publicId, width, height }) => {
   const playerRef = useRef();
   const [scriptLoaded, setScriptLoaded] = useState(false);
 
-  // Load Cloudinary script only once
   useEffect(() => {
     let script;
     if (!window.cloudinary) {
@@ -28,11 +27,10 @@ const CloudinaryPlayer = ({ publicId, width, height }) => {
     };
   }, []);
 
-  // Initialize or reinitialize player when script is loaded or publicId changes
+
   useEffect(() => {
     if (!scriptLoaded || !videoRef.current) return;
 
-    // Initialize the player with the new publicId
     playerRef.current = cloudinaryRef.current.videoPlayer(videoRef.current, {
       cloud_name: "carti",
       autoplay: true,

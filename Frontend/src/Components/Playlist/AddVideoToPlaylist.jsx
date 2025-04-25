@@ -6,7 +6,7 @@ import Button from '../Button'
 function AddVideoToPlaylist() {
   const Navigate = useNavigate()
   const [showPlaylistModal, setShowPlaylistModal] = useState(false)
-  const { VideoId } = useParams() // Ensure your route is providing this parameter
+  const { VideoId } = useParams() 
   const [playlists, setPlaylists] = useState([])
   const [PlaylistId , setPlaylistID] = useState("")
   const API_BASE  = import.meta.env.VITE_API_URL;
@@ -18,7 +18,6 @@ function AddVideoToPlaylist() {
     UserPlaylist();
   }, []);
   
-  // Updated addVideo accepts a playlistId parameter
   const addVideo = async (playlistId) => {
     try {
       await axios.post(

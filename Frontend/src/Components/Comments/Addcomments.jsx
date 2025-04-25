@@ -40,7 +40,7 @@ function Addcomment() {
   return (
 
     <div className="flex items-center space-x-3 mb-4">
-  {/* <div className="w-10 h-10 bg-gray-300 rounded-full"></div> */}
+
   <input 
     type="text" 
     placeholder="Add a comment..." 

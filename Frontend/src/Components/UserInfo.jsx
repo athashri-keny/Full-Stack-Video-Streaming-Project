@@ -19,8 +19,8 @@ function UserInfo() {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`
       },
-      withCredentials: true // Only if using cookies
-    })
+      withCredentials: true 
+        })
       .then((response) => {
         setUserdata(response.data.data);
         setLoading(false);
@@ -32,10 +32,8 @@ function UserInfo() {
   }, []);
 
   const handleUpdatePassword = () => {
-    // Add your logic for updating the password here
        Navigate('/EditProfile')
        console.log("Button was clicked")
-        // You can redirect to a password update page or show a modal
   };
 
   const HandleUpdateDetails = () => {
@@ -59,8 +57,7 @@ function UserInfo() {
       <div className={`w-full max-w-2xl mx-auto p-8 rounded-3xl shadow-2xl transform transition-all duration-500 animate-fade-in-up ${
         darkMode ? 'bg-gray-800' : 'bg-white'
       }`}>
-        {/* Cover Image */}
-        <div className="relative h-64 rounded-2xl overflow-hidden group">
+            <div className="relative h-64 rounded-2xl overflow-hidden group">
           <img
             src={userdata.coverImage}
             alt="Cover"
@@ -72,7 +69,7 @@ function UserInfo() {
           />
         </div>
 
-        {/* Avatar */}
+     
         <div className="flex justify-center -mt-20">
           <div className="relative group">
             <img
@@ -88,7 +85,7 @@ function UserInfo() {
           </div>
         </div>
 
-        {/* User Info */}
+   
         <div className="text-center mt-8 space-y-2">
           <h2 className={`text-3xl font-bold ${
             darkMode ? 'text-gray-100' : 'text-gray-900'
@@ -107,7 +104,7 @@ function UserInfo() {
           </p>
         </div>
 
-        {/* Action Buttons */}
+   
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <button
             onClick={HandleUpdateDetails}
@@ -132,7 +129,6 @@ function UserInfo() {
           </button>
         </div>
 
-        {/* Logout Button */}
         <div className="mt-8 flex justify-center">
           <Logout 
             className={`py-3 px-8 rounded-xl font-semibold transition-all duration-300 transform hover:scale-[1.02] ${

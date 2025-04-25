@@ -5,8 +5,7 @@ import { useSelector } from 'react-redux';
 const Input = forwardRef(({ 
   label,
   type = 'text',
-  className = '', // Corrected prop name
-  ...props
+  className = '', 
 }, ref) => {
   const id = useId();
 const darkMode = useSelector((state) => state.theme.DarkMode);

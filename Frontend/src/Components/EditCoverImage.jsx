@@ -39,7 +39,7 @@ function EditCoverImage() {
 
         if (response.status === 200) {
             setCoverImageUpdated(true);
-            setTimeout(() => Navigate('/'), 1500); // Wait for success message to show
+            setTimeout(() => Navigate('/'), 1500); 
         }
     } catch (error) {
         seterror(error.response?.data?.message || 'Failed to update cover image');

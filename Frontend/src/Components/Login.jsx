@@ -23,7 +23,7 @@ const [showPassword , setShowPassword] = useState(false)
 const API_BASE  = import.meta.env.VITE_API_URL;
 
 const login = async (data ) => {
-  SetError(''); // Reset error state
+  SetError(''); 
   try {
     const response = await axios.post(`${API_BASE}/api/v1/users/login`, data , 
       {
@@ -43,7 +43,7 @@ const login = async (data ) => {
   } catch (error) {
     SetError( error.message);
   }
-   // getting the current user details
+   
  
 };
 

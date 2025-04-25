@@ -20,7 +20,7 @@ const API_BASE  = import.meta.env.VITE_API_URL;
 const UpdatePass = async (e) => {
   e.preventDefault();
   try {
-    // Send data as JSON
+  
     await axios.post(
       `${API_BASE}/api/v1/users/change-password`,
       {
@@ -40,7 +40,7 @@ const UpdatePass = async (e) => {
       Navigate('/userinfo');
     }, 2000);
 
-    // Clear form fields
+ 
     SetOldPassword('');
     SetNewPassword('');
     setMessage("Password Updated Successfully");
